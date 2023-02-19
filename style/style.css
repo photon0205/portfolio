@@ -77,6 +77,7 @@
   color: #ffffff;
 }
 .recent-posts {
+  height: 396px;
   width: 100%;
   display: grid;
   grid-template-columns: auto auto;
@@ -117,17 +118,19 @@
   margin-left: auto;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(187, 225, 250, 0.25);
+  height: 295px;
 }
 .grid-item4 {
   width: 418px;
   margin-right: auto;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(187, 225, 250, 0.25);
+  height: 295px;
 }
 .post-title {
-    display : flex;
-    margin: auto;
-    margin-top: 30px;
+  display: flex;
+  margin: auto;
+  margin-top: 30px;
   width: 374px;
   height: 85px;
   font-family: "Heebo";
@@ -137,8 +140,8 @@
   color: #21243d;
 }
 .post-date {
-    display : flex;
-    margin: auto;
+  display: flex;
+  margin: auto;
   width: 374px;
   height: 34px;
   font-family: "Heebo";
@@ -148,13 +151,83 @@
   color: #21243d;
 }
 .post-description {
-    display : flex;
-    margin: auto;
+  display: flex;
+  margin: auto;
   width: 368px;
   height: 117px;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
+  color: #21243d;
+}
+
+.work{
+    display: flex;
+    padding-left: 300px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.works-title {
+    display: flex;
+  width: 152px;
+  height: 60px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  color: #21243d;
+    padding-left: 300px;
+    padding-top: 50px;
+}
+.work-image {
+  float: left;
+  width: 246px;
+  height: 180px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.work-title {
+  width: 305px;
+  height: 44px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 44px;
+  color: #21243d;
+}
+.work-date {
+  display: flex;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 18px;
+  color: #ffffff;
+  width: 62px;
+  height: 25px;
+  background: #142850;
+  border-radius: 16px;
+  padding-left: 25px;
+  align-items: center;
+}
+.work-cat {
+  width: 374px;
+  height: 34px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 29px;
+  color: #8695a4;
+}
+.work-description {
+  width: 594px;
+  height: 93px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
   color: #21243d;
 }
