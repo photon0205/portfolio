@@ -162,14 +162,14 @@
   color: #21243d;
 }
 
-.work{
-    display: flex;
-    padding-left: 300px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+.work {
+  display: flex;
+  padding-left: 300px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 .works-title {
-    display: flex;
+  display: flex;
   width: 152px;
   height: 60px;
   font-family: "Heebo";
@@ -177,8 +177,8 @@
   font-weight: 400;
   font-size: 22px;
   color: #21243d;
-    padding-left: 300px;
-    padding-top: 50px;
+  padding-left: 300px;
+  padding-top: 50px;
 }
 .work-image {
   float: left;
@@ -198,7 +198,7 @@
   color: #21243d;
 }
 .work-date {
-  display: flex;
+  display: inline-flex;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 900;
@@ -230,4 +230,22 @@
   font-size: 16px;
   line-height: 24px;
   color: #21243d;
+}
+.footer {
+  padding: 50px;
+  align-items: center;
+  text-align: center;
+}
+.text {
+  height: 21px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  color: #21243d;
+}
+.icon {
+  margin: 10px;
 }
