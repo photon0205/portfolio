@@ -1,0 +1,78 @@
+.navbar {
+  overflow: hidden;
+}
+.navbar a {
+  float: right;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
+}
+.overview {
+  display: flex;
+  height: 500px;
+}
+.left {
+  height: 500px;
+  margin: auto;
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px;
+}
+.right {
+  height: 500px;
+  margin-top: auto;
+  float: left;
+  width: 50%;
+  text-align: center;
+  padding: 10px;
+  height: 300px;
+}
+.overview .intro {
+  position: absolute;
+  width: 506px;
+  height: 105px;
+  left: 148px;
+  top: 228px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 60px;
+  color: #21243d;
+}
+.overview .description {
+  position: absolute;
+  width: 497px;
+  height: 66px;
+  left: 148px;
+  top: 373px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #21243d;
+}
+.overview .download {
+  position: absolute;
+  width: 208px;
+  height: 47px;
+  left: 148px;
+  top: 477px;
+  background: #ff6464;
+  border-radius: 2px;
+  border-style: none;
+}
+.overview .download-text {
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  color: #ffffff;
+}
