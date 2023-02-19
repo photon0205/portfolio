@@ -76,3 +76,85 @@
   font-size: 20px;
   color: #ffffff;
 }
+.recent-posts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  background: #edf7fa;
+  column-gap: 15px;
+  row-gap: 0px;
+}
+.grid-item1 {
+  width: 418px;
+  height: 60px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  color: #21243d;
+  text-align: center;
+  margin-left: auto;
+}
+.grid-item2 {
+  width: 418px;
+  height: 20px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: right;
+  align-items: center;
+  color: #00a8cc;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-decoration: none;
+}
+.grid-item3 {
+  width: 418px;
+  margin-left: auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(187, 225, 250, 0.25);
+}
+.grid-item4 {
+  width: 418px;
+  margin-right: auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(187, 225, 250, 0.25);
+}
+.post-title {
+    display : flex;
+    margin: auto;
+    margin-top: 30px;
+  width: 374px;
+  height: 85px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  color: #21243d;
+}
+.post-date {
+    display : flex;
+    margin: auto;
+  width: 374px;
+  height: 34px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  color: #21243d;
+}
+.post-description {
+    display : flex;
+    margin: auto;
+  width: 368px;
+  height: 117px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #21243d;
+}
