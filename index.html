@@ -9,9 +9,14 @@
   </head>
   <body>
     <div class="navbar">
-      <a href="#works">Works</a>
-      <a href="#blog">Blog</a>
-      <a href="#contact">Contact</a>
+      <div id="open">
+        <a href="#contact">Contact</a>
+        <a href="#blog">Blog</a>
+        <a href="#works">Works</a>
+      </div>
+      <a href="javascript:void(0);" class="bar">
+        <img src="assets/bars-solid.svg" height="30rem" width="30rem" />
+      </a>
     </div>
     <div class="overview">
       <div class="left">
@@ -33,55 +38,96 @@
       </div>
     </div>
     <div class="recent-posts">
+      <div class="row1">
         <div class="grid-item1">Recent posts</div>
         <a class="grid-item2" href="#all-posts">View all</a>
+      </div>
+      <div class="row2">
         <div class="grid-item3">
-            <span class="post-title">Making a design system from scratch</span>
-            <span class="post-date">12 Feb 2020 &nbsp;|&nbsp; Design, Pattern</span><br>
-            <span class="post-description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</span>
-        </div>  
-        <div class="grid-item4">
-            <span class="post-title">Creating pixel perfect icons in Figma</span>
-            <span class="post-date">12 Feb 2020 &nbsp;|&nbsp; Figma, Icon Design</span><br>
-            <span class="post-description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</span>
+          <span class="post-title">Making a design system from scratch</span>
+          <span class="post-date"
+            >12 Feb 2020 &nbsp;|&nbsp; Design, Pattern</span
+          ><br />
+          <span class="post-description"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+            sint. Velit officia consequat duis enim velit mollit. Exercitation
+            veniam consequat sunt nostrud amet.</span
+          >
         </div>
+        <div class="grid-item4">
+          <span class="post-title">Creating pixel perfect icons in Figma</span>
+          <span class="post-date"
+            >12 Feb 2020 &nbsp;|&nbsp; Figma, Icon Design</span
+          ><br />
+          <span class="post-description"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+            sint. Velit officia consequat duis enim velit mollit. Exercitation
+            veniam consequat sunt nostrud amet.</span
+          >
+        </div>
+      </div>
     </div>
     <div class="featured-works">
-        <span class="works-title">Featured works</span>
-        <div class="work">
-            <img src="assets/Rectangle 30.png" alt="work1" class="work-image">
-            <div class="work-description">
-                <span class="work-title">Designing Dashboards</span><br>
-                <span class="work-date">2020</span> &nbsp;&nbsp; <span class="work-cat">Dashboard</span><br>
-                <span class="work-description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</span>
-            </div>
+      <span class="works-title">Featured works</span>
+      <div class="work">
+        <img src="assets/Rectangle 30.png" alt="work1" class="work-image" />
+        <div class="work-description">
+          <span class="work-title">Designing Dashboards</span><br />
+          <span class="work-date">2020</span> &nbsp;&nbsp;
+          <span class="work-cat">Dashboard</span><br />
+          <p class="work-text"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+            sint. Velit officia consequat duis enim velit mollit. Exercitation
+            veniam consequat sunt nostrud amet.</p
+          >
         </div>
-        <hr style="width: 858px;">
-        <div class="work">
-            <img src="assets/Rectangle 32.png" alt="work1" class="work-image">
-            <div class="work-description">
-                <span class="work-title">Vibrant Portraits of 2020</span><br>
-                <span class="work-date">2018</span> &nbsp;&nbsp; <span class="work-cat">Illustration</span><br>
-                <span class="work-description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</span>
-            </div>
+      </div>
+      <hr style="width: 80%" />
+      <div class="work">
+        <img src="assets/Rectangle 32.png" alt="work1" class="work-image" />
+        <div class="work-description">
+          <span class="work-title">Vibrant Portraits of 2020</span><br />
+          <span class="work-date">2018</span> &nbsp;&nbsp;
+          <span class="work-cat">Illustration</span><br />
+          <p class="work-text"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+            sint. Velit officia consequat duis enim velit mollit. Exercitation
+            veniam consequat sunt nostrud amet.</p
+          >
         </div>
-        <hr style="width: 858px;">
-        <div class="work">
-            <img src="assets/Rectangle 34.png" alt="work1" class="work-image">
-            <div class="work-description">
-                <span class="work-title">36 Days of Malayalam type</span><br>
-                <span class="work-date">2018</span> &nbsp;&nbsp; <span class="work-cat">Typography</span><br>
-                <span class="work-description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</span>
-            </div>
+      </div>
+      <hr style="width: 80%" />
+      <div class="work">
+        <img src="assets/Rectangle 34.png" alt="work1" class="work-image" />
+        <div class="work-description">
+          <span class="work-title">36 Days of Malayalam type</span><br />
+          <span class="work-date">2018</span> &nbsp;&nbsp;
+          <span class="work-cat">Typography</span><br />
+          <p class="work-text"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+            sint. Velit officia consequat duis enim velit mollit. Exercitation
+            veniam consequat sunt nostrud amet.</p
+          >
         </div>
-        <hr style="width: 858px;">
+      </div>
+      <hr style="width: 80%" />
     </div>
     <div class="footer">
-        <a href="https://facebook.com/" class="icon"><img src="assets/square-facebook.svg" height="40px" width="40px"></a>
-        <a href="https://instagram.com/" class="icon"><img src="assets/instagram.svg" height="40px" width="40px"></a>
-        <a href="https://twitter.com/" class="icon"><img src="assets/twitter.svg" height="40px" width="40px"></a>
-        <a href="https://linkedin.com/" class="icon"><img src="assets/linkedin.svg" height="40px" width="40px"></a><br>
-        <span class="text">Copyright ©2020 All rights reserved </span>
+      <div class="icons">
+      <a href="https://facebook.com/" class="icon"
+        ><img src="assets/square-facebook.svg" height="30rem" width="30rem"
+      /></a>
+      <a href="https://instagram.com/" class="icon"
+        ><img src="assets/instagram.svg" height="30rem" width="30rem"
+      /></a>
+      <a href="https://twitter.com/" class="icon"
+        ><img src="assets/twitter.svg" height="30rem" width="30rem"
+      /></a>
+      <a href="https://linkedin.com/" class="icon"
+        ><img src="assets/linkedin.svg" height="30rem" width="30rem" /></a
+      ><br />
+      </div>
+      <span class="text">Copyright ©2020 All rights reserved </span>
     </div>
   </body>
 </html>

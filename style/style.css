@@ -1,5 +1,9 @@
+
 .navbar {
   overflow: hidden;
+}
+.bar{
+  display: none;
 }
 .navbar a {
   float: right;
@@ -13,58 +17,38 @@
   color: #000000;
 }
 .overview {
+  margin: auto;
   display: flex;
-  height: 500px;
+  flex-direction: row;
 }
 .left {
-  height: 500px;
-  margin: auto;
-  float: left;
-  width: 50%;
-  padding: 10px;
-  height: 300px;
+  flex: 1;
+  margin: 10rem;
+  width: 40rem;
 }
 .right {
-  height: 500px;
-  margin-top: auto;
-  float: left;
-  width: 50%;
+  flex: 1;
   text-align: center;
-  padding: 10px;
-  height: 300px;
+  margin-top: 10rem;
 }
 .overview .intro {
-  position: absolute;
-  width: 506px;
-  height: 105px;
-  left: 148px;
-  top: 228px;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
-  font-size: 44px;
-  line-height: 60px;
+  font-size: 2.75rem;
   color: #21243d;
 }
 .overview .description {
-  position: absolute;
-  width: 497px;
-  height: 66px;
-  left: 148px;
-  top: 373px;
+  height: 4.125rem;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
   color: #21243d;
 }
 .overview .download {
-  position: absolute;
-  width: 208px;
-  height: 47px;
-  left: 148px;
-  top: 477px;
+  width: 13rem;
+  height: 3rem;
   background: #ff6464;
   border-radius: 2px;
   border-style: none;
@@ -73,66 +57,68 @@
   font-family: "Heebo";
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #ffffff;
 }
 .recent-posts {
-  height: 396px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto auto;
+  padding-bottom: 1rem;
   background: #edf7fa;
-  column-gap: 15px;
-  row-gap: 0px;
+}
+.row1{
+  display: flex;
+}
+.row2{
+  display: flex;
 }
 .grid-item1 {
-  width: 418px;
-  height: 60px;
+  float: left;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
-  font-size: 22px;
-  display: flex;
+  font-size: 1.25rem;
   align-items: center;
   color: #21243d;
   text-align: center;
-  margin-left: auto;
+  margin: auto;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 .grid-item2 {
-  width: 418px;
-  height: 20px;
+  float: left;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
   text-align: right;
   align-items: center;
   color: #00a8cc;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto;
   text-decoration: none;
 }
 .grid-item3 {
-  width: 418px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-right: 1rem;
   margin-left: auto;
+  margin-right: 1rem;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(187, 225, 250, 0.25);
-  height: 295px;
 }
 .grid-item4 {
-  width: 418px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-right: 1rem;
   margin-right: auto;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(187, 225, 250, 0.25);
-  height: 295px;
 }
 .post-title {
-  display: flex;
   margin: auto;
-  margin-top: 30px;
-  width: 374px;
-  height: 85px;
+  margin-top: 2rem;
+  width: 24rem;
+  height: 5.5rem;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
@@ -140,10 +126,9 @@
   color: #21243d;
 }
 .post-date {
-  display: flex;
   margin: auto;
-  width: 374px;
-  height: 34px;
+  width: 24rem;
+  height: 2rem;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
@@ -151,51 +136,50 @@
   color: #21243d;
 }
 .post-description {
-  display: flex;
   margin: auto;
-  width: 368px;
-  height: 117px;
+  width: 23rem;
+  height: 7.5rem;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   color: #21243d;
 }
-
+.featured-works{
+  display: flex;
+  flex-direction: column;
+  width: 90%
+}
 .work {
   display: flex;
-  padding-left: 300px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  flex-direction: row;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
 }
 .works-title {
-  display: flex;
-  width: 152px;
-  height: 60px;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
   font-size: 22px;
   color: #21243d;
-  padding-left: 300px;
-  padding-top: 50px;
+  margin-left: 14rem;
+  margin-top: 3rem;
 }
 .work-image {
-  float: left;
-  width: 246px;
-  height: 180px;
+  height: 11.25rem;
   border-radius: 6px;
-  margin-right: 10px;
+  margin-left: auto;
 }
 .work-title {
-  width: 305px;
-  height: 44px;
+  height: 11.25rem;
+  width: 11.25rem;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
   line-height: 44px;
   color: #21243d;
+  margin: auto;
 }
 .work-date {
   display: inline-flex;
@@ -212,7 +196,6 @@
   align-items: center;
 }
 .work-cat {
-  width: 374px;
   height: 34px;
   font-family: "Heebo";
   font-style: normal;
@@ -222,13 +205,16 @@
   color: #8695a4;
 }
 .work-description {
-  width: 594px;
-  height: 93px;
+  width: 40rem;
+  margin: auto;
+  margin-left: 1rem;
+}
+.work-text{
+  margin-top:1rem;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
   color: #21243d;
 }
 .footer {
@@ -242,10 +228,80 @@
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 21px;
   text-align: center;
   color: #21243d;
 }
 .icon {
-  margin: 10px;
+  margin: 5px;
+}
+@media (max-width: 320px){
+  .navbar #open {
+    display: none;
+  }
+  .navbar{
+    overflow: hidden;
+  }
+  .navbar a {
+    float: right;
+  }
+  .bar {
+    display: inline-block;
+    align-items: right;
+  }
+  .overview{
+    flex-direction: column;
+    text-align: center;
+    margin-bottom:1rem;
+  }
+  .left {
+    flex: 1;
+    width: auto;
+    margin: auto;
+  }
+  .right {
+    flex: 1;
+    order: -1;
+    text-align: center;
+    margin: auto;
+  }
+  .row1 {
+    flex-wrap: wrap;
+  }
+  .row2 {
+    flex-wrap: wrap;
+  }
+  .grid-item2{
+    display: none;
+  }
+  .grid-item3{
+    margin: 0.5rem;
+  }
+  .grid-item4{
+    margin: 0.5rem;
+  }
+  .post-title {
+    width: auto;
+  }
+  .post-date {
+    width: auto;
+  }
+  .post-description {
+    width: auto;
+  }
+  .work{
+    display: flex;
+    flex-direction: column;
+  }
+  .work-image{
+    margin: auto;
+  }
+  .work-description{
+    width: auto;
+    margin: auto;
+    margin-left: 1rem;
+  }
+  .works-title{
+    margin: auto;
+    margin-top: 2rem;
+  }
 }
