@@ -1,0 +1,12 @@
+*.DS_Store
+*/node_modules
+
+*/build
+
+*.env.local
+*.env
+
+*.pyc
+*db.sqlite3
+*media
+*venv/

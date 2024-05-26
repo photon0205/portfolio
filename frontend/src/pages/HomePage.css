@@ -1,0 +1,61 @@
+.home-page {
+    padding: 20px;
+  }
+  
+  .home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  
+  .header-left {
+    flex: 1;
+  }
+  
+  .name {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .current-position {
+    font-size: 1.2em;
+    color: #ddd;
+  }
+  
+  .social-links {
+    margin-top: 10px;
+  }
+  
+  .social-links a {
+    color: #fe5d5b;
+    margin-right: 15px;
+    text-decoration: none;
+  }
+  
+  .social-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .header-right {
+    flex: 1;
+    text-align: right;
+  }
+  
+  .header-right img {
+    max-width: 150px;
+    border-radius: 50%;
+  }
+  
+  .header-right p {
+    font-size: 1.2em;
+    color: #ddd;
+    margin-top: 20px;
+  }
+  
+  .projects-section,
+  .experience-section {
+    margin-top: 40px;
+  }
+  
