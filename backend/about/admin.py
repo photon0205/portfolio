@@ -1,10 +1,21 @@
 from django.contrib import admin
-from .models import AboutMe, ContactInquiry
+from .models import AboutMe, SocialMediaLink, ContactInquiry
+from ckeditor.widgets import CKEditorWidget
+from django import forms
 
-@admin.register(AboutMe)
+class AboutMeAdminForm(forms.ModelForm):
+    summary = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = AboutMe
+        fields = '__all__'
+
 class AboutMeAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
+    form = AboutMeAdminForm
+
+admin.site.register(AboutMe, AboutMeAdmin)
+admin.site.register(SocialMediaLink)
+
 
 @admin.register(ContactInquiry)
 class ContactInquiryAdmin(admin.ModelAdmin):

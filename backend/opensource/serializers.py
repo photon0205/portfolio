@@ -12,6 +12,8 @@ class OpenSourceProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OpenSourceContributionSerializer(serializers.ModelSerializer):
+    open_source_project = OpenSourceProjectSerializer()
+    contribution_type = ContributionTypeSerializer()
     class Meta:
         model = OpenSourceContribution
         fields = '__all__'

@@ -14,10 +14,8 @@ class OpenSourceProjectAdmin(admin.ModelAdmin):
 class OpenSourceContributionAdmin(admin.ModelAdmin):
     list_display = (
         "open_source_project",
-        "start_date",
-        "end_date",
         "contribution_type",
-        "issue",
+        "pr_link",
     )
 
 

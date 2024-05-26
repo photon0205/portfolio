@@ -7,7 +7,7 @@ class DescriptionPointSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class WorkExperienceSerializer(serializers.ModelSerializer):
-    points = DescriptionPointSerializer(many=True)
+    description = DescriptionPointSerializer(many=True, read_only=True)
 
     class Meta:
         model = WorkExperience
