@@ -19,7 +19,7 @@ const HomePage = () => {
     fetchAboutMe().then(response => setAboutMe(response.data));
     fetchCategories().then(response => setCategories(response.data));
   }, []);
-  console.log(projects, experiences, aboutMe, categories)
+
   if (!aboutMe) {
     return <div>Loading...</div>;
   }
@@ -27,9 +27,15 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <header className="home-header">
-        <div className="header-left">
+        <div className="header-content">
           <h1 className="name">{aboutMe.name}</h1>
           {aboutMe.subtitle && <h2 className="subtitle">{aboutMe.subtitle}</h2>}
+          <div className="avatar-container">
+            <div className="profile-picture">
+              <img src={`${API_URL}/${aboutMe.avatar}`} alt="Profile" className="profile-picture" />
+            </div>
+          </div>
+          <div className="summary" dangerouslySetInnerHTML={{ __html: aboutMe.summary }} />
           <div className="social-links">
             {aboutMe.social_links.map(link => (
               <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer">
@@ -37,10 +43,6 @@ const HomePage = () => {
               </a>
             ))}
           </div>
-        </div>
-        <div className="header-right">
-        <img src={`${API_URL}/${aboutMe.profile_picture}`} alt="Profile" />
-          <div dangerouslySetInnerHTML={{ __html: aboutMe.summary }} />
         </div>
       </header>
       <section className="projects-section">

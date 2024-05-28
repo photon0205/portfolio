@@ -6,8 +6,8 @@ body {
     135deg,
     #1e1f26 25%,
     #313348 75%
-  ); /* Dark gradient background */
-  color: #fff; /* Ensure text is white for better contrast */
+  );
+  color: #fff;
 }
 
 section {
