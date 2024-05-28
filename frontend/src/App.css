@@ -2,31 +2,44 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(
-    135deg,
-    #1e1f26 25%,
-    #313348 75%
-  );
-  color: #fff;
+  background: #0d0d0d 25%;
+  color: #e0e0e0;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease-out, width 0.1s ease-out, height 0.1s ease-out;
+  z-index: -1;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+a:hover ~ .custom-cursor {
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle at center, #fe5d5b 0%, rgba(254, 93, 91, 0.3) 50%, rgba(254, 93, 91, 0) 100%);
 }
 
 section {
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for sections */
-  border-radius: 10px; /* Rounded corners for a modern look */
-  margin: 20px; /* Margin for spacing between sections */
 }
 
 h2 {
-  color: #5272ff; /* Blue hue for headers */
+  color: #5272ff;
 }
 
 p {
-  color: #ddd; /* Light gray text for readability */
+  color: #ddd;
 }
 
 a {
-  color: #fe5d5b; /* Light red link color for visibility */
+  color: #fe5d5b;
 }
 
 a:hover {

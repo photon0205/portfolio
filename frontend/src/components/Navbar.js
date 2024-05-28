@@ -3,7 +3,14 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/logo.png';
 
-const Navbar = () => {
+const Navbar = ( {handleScroll, projectsSectionRef, experienceSectionRef} ) => {
+  const handleNavLinkClick = (hash) => {
+    const section = document.querySelector(hash);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -12,11 +19,8 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-links">
-        <Link to="/projects">Projects</Link>
-        <Link to="/experiences">Experiences</Link>
-        <Link to="/open-source-projects">Open Source</Link>
-        <Link to="/testimonials">Testimonials</Link>
-        <Link to="/about-me">About Me</Link>
+        <Link to="/#projects" onClick={() => {handleScroll(projectsSectionRef.current);}}>Projects</Link>
+        <Link to="/#experience" onClick={() => {handleScroll(experienceSectionRef.current);}}>Experiences</Link>
         <Link to="/contact-inquiries">Contact</Link>
       </div>
     </nav>

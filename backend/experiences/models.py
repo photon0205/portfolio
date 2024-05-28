@@ -1,4 +1,5 @@
 from django.db import models
+from projects.models import CodingSkill
 
 
 class DescriptionPoint(models.Model):
@@ -17,6 +18,8 @@ class WorkExperience(models.Model):
     description = models.ManyToManyField(
         "DescriptionPoint", related_name="work_experiences"
     )
+    skills_used = models.ManyToManyField(CodingSkill, blank=True)
+    website = models.URLField(blank=True)
 
     def __str__(self):
         return f"{self.title} at {self.company}"
