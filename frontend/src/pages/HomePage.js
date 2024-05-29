@@ -1,19 +1,35 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  fetchOpenSourceContributions,
+  fetchOpenSourceProjects,
+} from "../services/openSourceService";
 import { fetchCategories, fetchProjects } from "../services/projectService";
 import { fetchWorkExperiences } from "../services/experienceService";
-import { fetchAboutMe } from "../services/aboutService";
 import ExperienceCard from "../components/ExperienceCard";
+import { fetchAboutMe } from "../services/aboutService";
 import ProjectCard from "../components/ProjectCard";
 import Sidebar from "../components/Sidebar";
+import AboutMe from "../components/AboutMe";
+import Footer from "../components/Footer";
 import "./HomePage.css";
+import ContactForm from "../components/ContactForm";
 
-const HomePage = ( {projectsSectionRef, experienceSectionRef} ) => {
+const HomePage = ({
+  handleScroll,
+  projectsSectionRef,
+  experienceSectionRef,
+  openSourceSectionRef,
+}) => {
   const [projects, setProjects] = useState([]);
+  const [openSourceProjects, setOpenSourceProjects] = useState(null);
   const [experiences, setExperiences] = useState([]);
+  const [contributions, setContributions] = useState([]);
   const [aboutMe, setAboutMe] = useState(null);
   const [categories, setCategories] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedOpenSourceProject, setSelectedOpenSourceProject] =
+    useState(null);
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
@@ -21,12 +37,19 @@ const HomePage = ( {projectsSectionRef, experienceSectionRef} ) => {
     (project) => project?.category.slug === selectedCategory
   );
 
+  const handleOpenSourceProjectClick = (project) => {
+    setSelectedOpenSourceProject(project);
+  };
+  const closeOpenSourceProjectDetails = (project) => {
+    setSelectedOpenSourceProject(null);
+    handleScroll(openSourceSectionRef.current);
+  };
   const handleProjectClick = (project) => {
     setSelectedProject(project);
   };
-
   const closeProjectDetails = () => {
     setSelectedProject(null);
+    handleScroll(projectsSectionRef.current);
   };
 
   const sortedExperiences = experiences?.sort((a, b) => {
@@ -46,7 +69,13 @@ const HomePage = ( {projectsSectionRef, experienceSectionRef} ) => {
     fetchProjects().then((response) => setProjects(response.data));
     fetchWorkExperiences().then((response) => setExperiences(response.data));
     fetchAboutMe().then((response) => setAboutMe(response.data));
-    fetchCategories().then((response) =>{
+    fetchOpenSourceProjects().then((response) =>
+      setOpenSourceProjects(response.data)
+    );
+    fetchOpenSourceContributions().then((response) =>
+      setContributions(response.data)
+    );
+    fetchCategories().then((response) => {
       setCategories(response.data);
       setSelectedCategory(response.data[0]?.slug);
     });
@@ -59,35 +88,7 @@ const HomePage = ( {projectsSectionRef, experienceSectionRef} ) => {
   return (
     <div className="home-page">
       <header className="home-header">
-        <div className="header-content">
-          <h1 className="name">{aboutMe.name}</h1>
-          {aboutMe.subtitle && <h2 className="subtitle">{aboutMe.subtitle}</h2>}
-          <div className="avatar-container">
-            <div className="profile-picture">
-              <img
-                src={`${API_URL}/${aboutMe.avatar}`}
-                alt="Profile"
-                className="profile-picture"
-              />
-            </div>
-          </div>
-          <div
-            className="summary"
-            dangerouslySetInnerHTML={{ __html: aboutMe.summary }}
-          />
-          <div className="social-links">
-            {aboutMe.social_links.map((link) => (
-              <a
-                key={link.platform}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link.platform}
-              </a>
-            ))}
-          </div>
-        </div>
+        <AboutMe aboutMe={aboutMe} />
       </header>
       <section className="projects-section" ref={projectsSectionRef}>
         <h2>Projects</h2>
@@ -107,6 +108,7 @@ const HomePage = ( {projectsSectionRef, experienceSectionRef} ) => {
             {filteredProjects?.map((project) => (
               <ProjectCard
                 key={project.id}
+                type="project"
                 project={project}
                 handleProjectClick={handleProjectClick}
               />
@@ -114,8 +116,10 @@ const HomePage = ( {projectsSectionRef, experienceSectionRef} ) => {
           </div>
           {selectedProject && (
             <Sidebar
+              type="project"
               selectedProject={selectedProject}
-              closeProjectDetails={closeProjectDetails}
+              closeSidebar={closeProjectDetails}
+              direction="right"
             />
           )}
         </div>
@@ -128,6 +132,31 @@ const HomePage = ( {projectsSectionRef, experienceSectionRef} ) => {
           ))}
         </div>
       </section>
+      <section className="projects-section" ref={openSourceSectionRef}>
+        <h2>Open Source Contributions</h2>
+        <div className="projects-tabs">
+          <div className="projects-list">
+            {openSourceProjects?.map((project) => (
+              <ProjectCard
+                key={project.id}
+                type="open-source"
+                project={project}
+                handleProjectClick={handleOpenSourceProjectClick}
+              />
+            ))}
+          </div>
+          {selectedOpenSourceProject && (
+            <Sidebar
+              type="contribution"
+              selectedProject={selectedOpenSourceProject}
+              closeSidebar={closeOpenSourceProjectDetails}
+              direction="left"
+            />
+          )}
+        </div>
+      </section>
+      <ContactForm />
+      <Footer aboutMe={aboutMe}/>
     </div>
   );
 };

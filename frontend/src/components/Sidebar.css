@@ -38,7 +38,6 @@
   width: 34em;
   height: 100%;
   position: fixed;
-  right: 0px;
   animation-name: fadeInLeft;
   animation-duration: 0.5s;
   animation-fill-mode: both;
@@ -48,11 +47,13 @@
   will-change: opacity, transform;
   overflow-y: auto;
 }
-.sidebar {
-  position: relative;
-  padding: 2rem 2rem 4rem;
-  overflow-x: overlay;
-  max-height: 80%;
+
+.sidebar-container.right {
+  right: 0px;
+}
+
+.sidebar-container.left {
+  left: 0px;
 }
 
 @keyframes fadeInLeft {
@@ -62,6 +63,29 @@
   to {
     transform: translateX(0);
   }
+}
+
+@keyframes fadeInRight {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-container.right {
+  animation-name: fadeInLeft;
+}
+
+.sidebar-container.left {
+  animation-name: fadeInRight;
+}
+.sidebar {
+  position: relative;
+  padding: 2rem 2rem 4rem;
+  overflow-x: overlay;
+  max-height: 80%;
 }
 
 .sidebar-header {
@@ -141,6 +165,11 @@
   text-align: center;
   font-size: 0.875em;
   border: none;
+}
+
+.open-project-button:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .project-links svg {

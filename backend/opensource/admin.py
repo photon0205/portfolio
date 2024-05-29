@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import ContributionType, OpenSourceProject, OpenSourceContribution
+from .models import (
+    ContributionType,
+    OpenSourceProject,
+    OpenSourceContribution,
+)
 
 
 class ContributionTypeAdmin(admin.ModelAdmin):
@@ -9,7 +13,6 @@ class ContributionTypeAdmin(admin.ModelAdmin):
 
 class OpenSourceProjectAdmin(admin.ModelAdmin):
     list_display = ("name", "repo_link")
-
 
 class OpenSourceContributionAdmin(admin.ModelAdmin):
     list_display = (

@@ -1,25 +1,29 @@
 import React from "react";
 import "./ProjectCard.css";
 
-const ProjectCard = ({ project, handleProjectClick }) => {
+const ProjectCard = ({ project, handleProjectClick, type }) => {
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
   return (
     <div className="project-card" onClick={() => handleProjectClick(project)}>
       <div className="project-image">
         <img
-          src={`${API_URL}/${project.images[0].image}`}
-          alt={project.title}
+          src={`${API_URL}/${
+            type == "project" ? project.images[0].image : project.image
+          }`}
+          alt={type == "project" ? project.title : project.name}
         />
         <div className="project-overlay">
-          <h3>{project.title}</h3>
+          <h3>{type == "project" ? project.title : project.name}</h3>
           <p>{project.caption}</p>
-          <div className="skills-used">
-            {project.skills_used.map((skill) => (
-              <span key={skill.id} className="skill-tag">
-                {skill.name}
-              </span>
-            ))}
-          </div>
+          {type == "project" && (
+            <div className="skills-used">
+              {project.skills_used.map((skill) => (
+                <span key={skill.id} className="skill-tag">
+                  {skill.name}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

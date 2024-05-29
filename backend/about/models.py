@@ -32,6 +32,7 @@ class AboutMe(models.Model):
     name = models.CharField(max_length=100)
     summary = RichTextField()
     subtitle = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True, null=True)
     profile_picture = models.ImageField(
         upload_to="about_me/profile_pictures/", blank=True
     )
@@ -39,7 +40,7 @@ class AboutMe(models.Model):
     avatar = models.ImageField(upload_to="about_me/avatars/", blank=True)
 
     def __str__(self):
-        return "About Me"
+        return self.name
 
     class Meta:
         verbose_name = "About Me"

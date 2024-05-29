@@ -7,6 +7,7 @@ import ContactInquiries from "../pages/ContactInquiries";
 const AppRouter = () => {
   const projectsSectionRef = useRef(null);
   const experienceSectionRef = useRef(null);
+  const openSourceSectionRef = useRef(null);
   const handleScroll = (ref) => {
     window.scrollTo({
       top: ref.offsetTop,
@@ -21,14 +22,17 @@ const AppRouter = () => {
         handleScroll={handleScroll}
         projectsSectionRef={projectsSectionRef}
         experienceSectionRef={experienceSectionRef}
+        openSourceSectionRef={openSourceSectionRef}
       />
       <Routes>
         <Route
           path="/"
           element={
             <HomePage
+              handleScroll={handleScroll}
               projectsSectionRef={projectsSectionRef}
               experienceSectionRef={experienceSectionRef}
+              openSourceSectionRef={openSourceSectionRef}
             />
           }
         />

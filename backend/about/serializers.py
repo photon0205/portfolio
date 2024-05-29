@@ -11,7 +11,7 @@ class AboutMeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AboutMe
-        fields = ['name', 'subtitle', 'summary', 'profile_picture', 'resume', 'avatar', 'social_links']
+        fields = '__all__'
 
 class ContactInquirySerializer(serializers.ModelSerializer):
     class Meta:
