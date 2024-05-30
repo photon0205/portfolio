@@ -1,5 +1,11 @@
 import React from "react";
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+  FaEnvelope,
+  FaInstagram,
+} from "react-icons/fa";
 import "./AboutMe.css";
 
 const AboutMe = ({ aboutMe }) => {
@@ -17,6 +23,8 @@ const AboutMe = ({ aboutMe }) => {
         return <FaLinkedin />;
       case "twitter":
         return <FaTwitter />;
+      case "instagram":
+        return <FaInstagram />;
       case "email":
         return <FaEnvelope />;
       default:

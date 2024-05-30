@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  fetchOpenSourceContributions,
-  fetchOpenSourceProjects,
-} from "../services/openSourceService";
+import { fetchOpenSourceProjects } from "../services/openSourceService";
 import { fetchCategories, fetchProjects } from "../services/projectService";
 import { fetchWorkExperiences } from "../services/experienceService";
 import ExperienceCard from "../components/ExperienceCard";
@@ -12,26 +9,25 @@ import Sidebar from "../components/Sidebar";
 import AboutMe from "../components/AboutMe";
 import Footer from "../components/Footer";
 import "./HomePage.css";
-import ContactForm from "../components/ContactForm";
+import SideNavigationBar from "../components/SideNavigationBar";
 
 const HomePage = ({
   handleScroll,
+  aboutSectionRef,
   projectsSectionRef,
   experienceSectionRef,
   openSourceSectionRef,
+  contactSectionRef,
 }) => {
   const [projects, setProjects] = useState([]);
   const [openSourceProjects, setOpenSourceProjects] = useState(null);
   const [experiences, setExperiences] = useState([]);
-  const [contributions, setContributions] = useState([]);
   const [aboutMe, setAboutMe] = useState(null);
   const [categories, setCategories] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedOpenSourceProject, setSelectedOpenSourceProject] =
     useState(null);
-
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
   const filteredProjects = projects?.filter(
     (project) => project?.category.slug === selectedCategory
@@ -72,9 +68,6 @@ const HomePage = ({
     fetchOpenSourceProjects().then((response) =>
       setOpenSourceProjects(response.data)
     );
-    fetchOpenSourceContributions().then((response) =>
-      setContributions(response.data)
-    );
     fetchCategories().then((response) => {
       setCategories(response.data);
       setSelectedCategory(response.data[0]?.slug);
@@ -87,9 +80,17 @@ const HomePage = ({
 
   return (
     <div className="home-page">
-      <header className="home-header">
+      <SideNavigationBar
+        handleScroll={handleScroll}
+        aboutSectionRef={aboutSectionRef}
+        projectsSectionRef={projectsSectionRef}
+        experienceSectionRef={experienceSectionRef}
+        openSourceSectionRef={openSourceSectionRef}
+        contactSectionRef={contactSectionRef}
+      />
+      <section className="home-header" ref={aboutSectionRef}>
         <AboutMe aboutMe={aboutMe} />
-      </header>
+      </section>
       <section className="projects-section" ref={projectsSectionRef}>
         <h2>Projects</h2>
         <div className="project-tabs">
@@ -155,8 +156,10 @@ const HomePage = ({
           )}
         </div>
       </section>
-      <ContactForm />
-      <Footer aboutMe={aboutMe}/>
+      <section ref={contactSectionRef}>
+        <h2>Contact Me</h2>
+        <Footer aboutMe={aboutMe} />
+      </section>
     </div>
   );
 };

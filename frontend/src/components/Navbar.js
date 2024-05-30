@@ -8,6 +8,7 @@ const Navbar = ({
   projectsSectionRef,
   experienceSectionRef,
   openSourceSectionRef,
+  contactSectionRef,
 }) => {
   return (
     <nav className="navbar">
@@ -41,7 +42,14 @@ const Navbar = ({
         >
           OpenSource
         </Link>
-        <Link to="/contact-inquiries">Contact</Link>
+        <Link
+          to="/#contact"
+          onClick={() => {
+            handleScroll(contactSectionRef.current);
+          }}
+        >
+          Contact
+        </Link>
       </div>
     </nav>
   );

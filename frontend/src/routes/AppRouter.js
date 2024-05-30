@@ -2,12 +2,13 @@ import React, { useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import HomePage from "../pages/HomePage";
-import ContactInquiries from "../pages/ContactInquiries";
 
 const AppRouter = () => {
+  const aboutSectionRef = useRef(null);
   const projectsSectionRef = useRef(null);
   const experienceSectionRef = useRef(null);
   const openSourceSectionRef = useRef(null);
+  const contactSectionRef = useRef(null);
   const handleScroll = (ref) => {
     window.scrollTo({
       top: ref.offsetTop,
@@ -20,9 +21,11 @@ const AppRouter = () => {
     <>
       <Navbar
         handleScroll={handleScroll}
+        aboutSectionRef={aboutSectionRef}
         projectsSectionRef={projectsSectionRef}
         experienceSectionRef={experienceSectionRef}
         openSourceSectionRef={openSourceSectionRef}
+        contactSectionRef={contactSectionRef}
       />
       <Routes>
         <Route
@@ -30,13 +33,14 @@ const AppRouter = () => {
           element={
             <HomePage
               handleScroll={handleScroll}
+              aboutSectionRef={aboutSectionRef}
               projectsSectionRef={projectsSectionRef}
               experienceSectionRef={experienceSectionRef}
               openSourceSectionRef={openSourceSectionRef}
+              contactSectionRef={contactSectionRef}
             />
           }
         />
-        <Route path="/contact-inquiries" element={<ContactInquiries />} />
       </Routes>
     </>
   );

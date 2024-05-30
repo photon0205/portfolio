@@ -51,7 +51,7 @@ class ContactInquiry(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     message = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     date_sent = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

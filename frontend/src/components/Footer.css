@@ -2,27 +2,30 @@
   color: #ffffff;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 20px;
   text-align: left;
+  height: 25rem
 }
 
 .left-footer-section,
 .right-footer-section {
   flex: 1;
-  padding: 20px;
+  padding-top: 20px;
 }
 
 .left-footer-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 50%;
+  justify-content: flex-end;
 }
 
 .right-footer-section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 50%;
+  justify-content: flex-end;
 }
 .footer-links {
   margin-top: 10px;
@@ -83,4 +86,7 @@
 
 .footer-icons a:hover {
   text-decoration: underline;
+}
+.footer-logo img{
+  max-height: 12rem;
 }

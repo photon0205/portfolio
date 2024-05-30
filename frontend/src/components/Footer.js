@@ -1,10 +1,16 @@
 import React from "react";
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+  FaEnvelope,
+  FaInstagram,
+} from "react-icons/fa";
 import logo from "../assets/logo.png";
 import "./Footer.css";
+import ContactForm from "./ContactForm";
 
 const Footer = ({ aboutMe }) => {
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
   const getIcon = (platform) => {
     switch (platform.toLowerCase()) {
       case "github":
@@ -13,6 +19,8 @@ const Footer = ({ aboutMe }) => {
         return <FaLinkedin />;
       case "twitter":
         return <FaTwitter />;
+      case "instagram":
+        return <FaInstagram />;
       case "email":
         return <FaEnvelope />;
       default:
@@ -22,14 +30,15 @@ const Footer = ({ aboutMe }) => {
   return (
     <footer className="footer">
       <div className="left-footer-section">
+        <ContactForm />
+      </div>
+      <div className="right-footer-section">
+        <div className="footer-logo">
+          <img src={logo} alt="Logo" />
+        </div>
         <p class="footer-caption">
           Living, learning, & leveling up one day at a time.
         </p>
-      </div>
-        <div className="navbar-logo">
-          <img src={logo} alt="Logo" />
-        </div>
-      <div className="right-footer-section">
         <div className="footer-icons">
           {aboutMe.social_links.map((link) => (
             <a

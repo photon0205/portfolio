@@ -4,7 +4,7 @@ from .models import AboutMe, ContactInquiry, SocialMediaLink
 class SocialMediaLinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialMediaLink
-        fields = ['platform', 'url']
+        fields = '__all__'
 
 class AboutMeSerializer(serializers.ModelSerializer):
     social_links = SocialMediaLinkSerializer(many=True, read_only=True)
