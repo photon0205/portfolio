@@ -9,7 +9,7 @@ import {
 import "./AboutMe.css";
 
 const AboutMe = ({ aboutMe }) => {
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+    const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
 
   if (!aboutMe) {
     return <div>Loading...</div>;
@@ -31,13 +31,14 @@ const AboutMe = ({ aboutMe }) => {
         return null;
     }
   };
+  
   return (
     <header className="about-me">
       <div className="left-section">
         <div className="avatar-container">
           <div className="profile-picture">
             <img
-              src={`${API_URL}/${aboutMe.avatar}`}
+              src={`${API_URL}${aboutMe.avatar}`}
               alt="Profile"
               className="profile-picture"
             />

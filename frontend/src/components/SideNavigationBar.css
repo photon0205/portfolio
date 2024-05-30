@@ -110,3 +110,9 @@
 .side-navigation-bar .nav-icon {
   margin-right: 10px;
 }
+
+@media (max-width: 480px) {
+  .side-navigation-bar {
+    display: none;
+  }
+}

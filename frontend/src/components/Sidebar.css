@@ -20,8 +20,8 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
   background: rgba(0, 0, 0, 0.8);
   z-index: 1000;
 }
@@ -35,27 +35,31 @@
 
 .sidebar-container {
   background-color: #020a13;
-  width: 34em;
+  width: 100%;
   height: 100%;
   position: fixed;
   animation-name: fadeInLeft;
   animation-duration: 0.5s;
   animation-fill-mode: both;
-  top: 0px;
+  top: 0;
   z-index: 999999;
-  transition: all 0.3s linear 0s;
+  transition: all 0.3s linear;
   will-change: opacity, transform;
   overflow-y: auto;
 }
 
 .sidebar-container.right {
-  right: 0px;
+  right: 0;
 }
 
 .sidebar-container.left {
-  left: 0px;
+  left: 0;
 }
-
+@media only screen and (min-width: 768px) {
+  .sidebar-container {
+    width: 34em;
+  }
+}
 @keyframes fadeInLeft {
   from {
     transform: translateX(100%);
@@ -81,10 +85,11 @@
 .sidebar-container.left {
   animation-name: fadeInRight;
 }
+
 .sidebar {
   position: relative;
-  padding: 2rem 2rem 4rem;
-  overflow-x: overlay;
+  padding: 2rem 1rem 4rem;
+  overflow-x: hidden;
   max-height: 80%;
 }
 
@@ -96,15 +101,18 @@
   padding-bottom: 0.8rem;
   border-bottom: 1px solid #14202b;
 }
+
 .sidebar-header a {
   color: #3f566e;
   font-size: 0.875em;
   font-weight: 900;
   text-decoration: none;
 }
+
 .sidebar-header a:hover {
   text-decoration: underline;
 }
+
 .close-button {
   background: none;
   border: none;
@@ -112,37 +120,33 @@
 }
 
 .sidebar-content {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 .sidebar-content h3 {
-  font-size: calc(1.667em - 6px);
+  font-size: 1.5em;
   color: #e1e1e1;
   font-weight: 800;
 }
 
 .sidebar-content p {
   color: #c6c6c6;
-  font-size: 0.875em;
-  font-family: Blorado, sans-serif;
-  text-rendering: geometricprecision;
+  font-size: 1em;
 }
 
 .sidebar-content h4 {
-  font-size: 1.124em;
+  font-size: 1.2em;
   color: #e1e1e1;
   margin-top: 2rem;
   margin-bottom: 0.8rem;
-  font-family: Blorado, sans-serif;
-  text-rendering: geometricprecision;
 }
 
 .project-details-image {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: auto;
+  max-height: 300px;
   border-radius: 11px;
   vertical-align: middle;
   border-style: none;
@@ -151,19 +155,20 @@
 .project-links a {
   display: block;
   margin: 5px 0;
+  overflow-wrap: break-word;
 }
 
 .open-project-button {
   background: #3f566e;
   position: fixed;
   width: 100%;
-  left: 0px;
-  bottom: 0px;
+  left: 0;
+  bottom: 0;
   padding: 17px;
-  color: rgb(255, 255, 255);
+  color: #fff;
   font-weight: 600;
   text-align: center;
-  font-size: 0.875em;
+  font-size: 1em;
   border: none;
 }
 
@@ -172,27 +177,20 @@
   cursor: pointer;
 }
 
-.project-links svg {
-  margin-right: 8px;
-  width: 16px;
-  vertical-align: bottom;
-  fill: rgb(255, 255, 255);
-}
-
+.project-links svg,
 .open-project-button svg {
   margin-right: 8px;
   width: 16px;
   vertical-align: bottom;
-  fill: rgb(255, 255, 255);
+  fill: #fff;
 }
+
 .project-links a {
   font-weight: 600;
   color: #3f566e;
   cursor: pointer;
-  font-family: Blorado, sans-serif;
-  text-rendering: geometricprecision;
-  text-decoration: none;
 }
+
 .project-links a:hover {
   text-decoration: underline;
 }

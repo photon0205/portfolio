@@ -29,39 +29,41 @@ const Footer = ({ aboutMe }) => {
   };
   return (
     <footer className="footer">
-      <div className="left-footer-section">
-        <ContactForm />
-      </div>
-      <div className="right-footer-section">
-        <div className="footer-logo">
-          <img src={logo} alt="Logo" />
+      <div className="footer-sections">
+        <div className="left-footer-section">
+          <ContactForm />
         </div>
-        <p class="footer-caption">
-          Living, learning, & leveling up one day at a time.
-        </p>
-        <div className="footer-icons">
-          {aboutMe.social_links.map((link) => (
+        <div className="right-footer-section">
+          <div className="footer-logo">
+            <img src={logo} alt="Logo" />
+          </div>
+          <p className="footer-caption">
+            Living, learning, & leveling up one day at a time.
+          </p>
+          <div className="footer-icons">
+            {aboutMe.social_links.map((link) => (
+              <a
+                key={link.platform}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {getIcon(link.platform)}
+              </a>
+            ))}
             <a
-              key={link.platform}
-              href={link.url}
+              href={`mailto:${aboutMe.email}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {getIcon(link.platform)}
+              {getIcon("email")}
             </a>
-          ))}
-          <a
-            href={`mailto:${aboutMe.email}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {getIcon("email")}
-          </a>
+          </div>
+          <p className="copyright">
+            &copy; {new Date().getFullYear()} Sahajpreet Singh. All Rights
+            Reserved.
+          </p>
         </div>
-        <p>
-          &copy; {new Date().getFullYear()} Sahajpreet Singh. All Rights
-          Reserved.
-        </p>
       </div>
     </footer>
   );

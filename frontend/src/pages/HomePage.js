@@ -10,6 +10,7 @@ import AboutMe from "../components/AboutMe";
 import Footer from "../components/Footer";
 import "./HomePage.css";
 import SideNavigationBar from "../components/SideNavigationBar";
+import { FaArrowUp } from "react-icons/fa";
 
 const HomePage = ({
   handleScroll,
@@ -28,6 +29,7 @@ const HomePage = ({
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedOpenSourceProject, setSelectedOpenSourceProject] =
     useState(null);
+  const [showScrollTopButton, setShowScrollTopButton] = useState(false);
 
   const filteredProjects = projects?.filter(
     (project) => project?.category.slug === selectedCategory
@@ -36,7 +38,7 @@ const HomePage = ({
   const handleOpenSourceProjectClick = (project) => {
     setSelectedOpenSourceProject(project);
   };
-  const closeOpenSourceProjectDetails = (project) => {
+  const closeOpenSourceProjectDetails = () => {
     setSelectedOpenSourceProject(null);
     handleScroll(openSourceSectionRef.current);
   };
@@ -72,7 +74,25 @@ const HomePage = ({
       setCategories(response.data);
       setSelectedCategory(response.data[0]?.slug);
     });
+
+    const handleScrollEvent = () => {
+      if (window.pageYOffset > 200) {
+        setShowScrollTopButton(true);
+      } else {
+        setShowScrollTopButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollEvent);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollEvent);
+    };
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   if (!aboutMe) {
     return <div>Loading...</div>;
@@ -160,6 +180,11 @@ const HomePage = ({
         <h2>Contact Me</h2>
         <Footer aboutMe={aboutMe} />
       </section>
+      {showScrollTopButton && (
+        <div className="scroll-top-button" onClick={scrollToTop}>
+          <FaArrowUp />
+        </div>
+      )}
     </div>
   );
 };

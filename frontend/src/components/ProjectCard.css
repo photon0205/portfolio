@@ -75,3 +75,63 @@
   font-weight: 500;
   color: white;
 }
+
+@media (max-width: 768px) {
+  .project-card {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .project-image {
+    height: 200px;
+  }
+
+  .project-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .project-overlay p {
+    font-size: 12px;
+  }
+
+  .skills-used {
+    justify-content: center;
+  }
+
+  .skill-tag {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .project-image {
+    height: 150px;
+  }
+
+  .project-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .project-overlay p {
+    font-size: 12px;
+  }
+
+  .skills-used {
+    justify-content: flex-start;
+    gap: 3px;
+  }
+
+  .skill-tag {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+}

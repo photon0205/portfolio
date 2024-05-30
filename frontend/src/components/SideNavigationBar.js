@@ -21,7 +21,6 @@ const SideNavigationBar = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      const { offsetTop: aboutOffset } = aboutSectionRef.current;
       const { offsetTop: projectsOffset } = projectsSectionRef.current;
       const { offsetTop: experienceOffset } = experienceSectionRef.current;
       const { offsetTop: openSourceOffset } = openSourceSectionRef.current;

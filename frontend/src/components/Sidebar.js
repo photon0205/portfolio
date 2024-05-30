@@ -7,17 +7,17 @@ const Sidebar = ({
   closeSidebar,
   direction = "right",
 }) => {
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+  const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, "");
   const sidebarContainerClasses = `sidebar-container ${
     direction === "left" ? "left" : "right"
   }`;
-  const handleOpenProject =() =>{
-    if(type == "project"){
-        window.open(selectedProject.live_demo_link);
-    }else if(type == "contribution"){
-        window.open(selectedProject.repo_link);
+  const handleOpenProject = () => {
+    if (type === "project") {
+      window.open(selectedProject.live_demo_link);
+    } else if (type === "contribution") {
+      window.open(selectedProject.repo_link);
     }
-  }
+  };
   return (
     <div className="sidebar-modal-wrapper">
       <div className="sidebar-modal-overlay" onClick={closeSidebar}></div>
@@ -45,16 +45,16 @@ const Sidebar = ({
                 ></path>
               </svg>
             </button>
-            <a rel="noopener noreferrer" onClick={closeSidebar}>
-              Back To {type == "project"?"Projects" : "Contributions"}.
+            <a href rel="noopener noreferrer" onClick={closeSidebar}>
+              Back To {type === "project" ? "Projects" : "Contributions"}.
             </a>
           </div>
-          {type == "project" && (
+          {type === "project" && (
             <div className="sidebar-content">
               <h3>{selectedProject.title}</h3>
               <p>{selectedProject.caption}</p>
               <img
-                src={`${API_URL}/${selectedProject.images[0].image}`}
+                src={`${API_URL}${selectedProject.images[0].image}`}
                 alt={selectedProject.title}
                 className="project-details-image"
               />
@@ -116,12 +116,12 @@ const Sidebar = ({
               </div>
             </div>
           )}
-          {type == "contribution" && (
+          {type === "contribution" && (
             <div className="sidebar-content">
               <h3>{selectedProject.name}</h3>
               <p>{selectedProject.caption}</p>
               <img
-                src={`${API_URL}/${selectedProject.image}`}
+                src={`${API_URL}${selectedProject.image}`}
                 alt={selectedProject.name}
                 className="project-details-image"
               />

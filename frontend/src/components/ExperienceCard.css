@@ -82,3 +82,49 @@
 .timeline-item:hover svg {
   transform: translate(2px, -2px);
 }
+
+@media (max-width: 768px) {
+  .timeline-content {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .timeline-dates {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  .timeline-details h3 {
+    font-size: 14px;
+  }
+
+  .timeline-details .description li {
+    font-size: 12px;
+  }
+
+  .timeline-details .skill {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-dates {
+    font-size: 11px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .timeline-details h3 {
+    font-size: 13px;
+  }
+
+  .timeline-details .description li {
+    font-size: 11px;
+  }
+
+  .timeline-details .skill {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+  }
+}

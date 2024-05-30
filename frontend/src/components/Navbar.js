@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../assets/logo.png";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = ({
   handleScroll,
@@ -10,6 +11,17 @@ const Navbar = ({
   openSourceSectionRef,
   contactSectionRef,
 }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLinkClick = (sectionRef) => {
+    handleScroll(sectionRef.current);
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -17,39 +29,35 @@ const Navbar = ({
           <img src={logo} alt="Logo" />
         </Link>
       </div>
-      <div className="navbar-links">
+      <div className={`navbar-overlay ${isMobileMenuOpen ? "active" : ""}`} onClick={toggleMobileMenu}></div>
+      <div className={`navbar-links ${isMobileMenuOpen ? "active" : ""}`}>
         <Link
           to="/#projects"
-          onClick={() => {
-            handleScroll(projectsSectionRef.current);
-          }}
+          onClick={() => handleLinkClick(projectsSectionRef)}
         >
           Projects
         </Link>
         <Link
           to="/#experience"
-          onClick={() => {
-            handleScroll(experienceSectionRef.current);
-          }}
+          onClick={() => handleLinkClick(experienceSectionRef)}
         >
           Experiences
         </Link>
         <Link
           to="/#open-source"
-          onClick={() => {
-            handleScroll(openSourceSectionRef.current);
-          }}
+          onClick={() => handleLinkClick(openSourceSectionRef)}
         >
           OpenSource
         </Link>
         <Link
           to="/#contact"
-          onClick={() => {
-            handleScroll(contactSectionRef.current);
-          }}
+          onClick={() => handleLinkClick(contactSectionRef)}
         >
           Contact
         </Link>
+      </div>
+      <div className="navbar-toggle" onClick={toggleMobileMenu}>
+        {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
       </div>
     </nav>
   );

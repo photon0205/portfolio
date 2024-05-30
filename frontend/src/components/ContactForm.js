@@ -9,7 +9,6 @@ const ContactForm = () => {
     email: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const form = useRef();
@@ -33,7 +32,6 @@ const ContactForm = () => {
       .then((result) => {
         console.log("Email successfully sent!", result.text);
         setLoading(false);
-        setSubmitted(true);
         setSnackbarOpen(true);
         setFormData({
           name: "",

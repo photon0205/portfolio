@@ -1,15 +1,14 @@
 .about-me {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 20px;
   text-align: left;
   color: rgb(226 232 240);
 }
 
 .left-section,
 .right-section {
-  flex: 1;
+  width: 100%;
   padding: 20px;
 }
 
@@ -25,14 +24,14 @@
 }
 
 .name {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .title {
-  font-size: 1.25rem;
-  margin-bottom: 0px;
+  font-size: 1rem;
+  margin-bottom: 0;
 }
 
 .subtitle {
@@ -43,11 +42,12 @@
 .avatar-container {
   position: relative;
   display: flex;
+  justify-content: center;
 }
 
 .profile-picture img {
-  --s: 200px;
-  --b: 5px;
+  --s: 150px;
+  --b: 4px;
   --c: #5272ff;
   --f: 1;
 
@@ -80,6 +80,7 @@
 
 .summary {
   margin-top: 15px;
+  width: 100%;
 }
 
 .summary p {
@@ -102,4 +103,33 @@
 }
 .social-links a:hover {
   text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .about-me {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .avatar-container{
+    justify-content: flex-start;
+  }
+
+  .left-section,
+  .right-section {
+    width: 50%;
+  }
+
+  .name {
+    font-size: 3rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .profile-picture img {
+    --s: 200px;
+    --b: 5px;
+  }
 }

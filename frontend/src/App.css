@@ -4,6 +4,7 @@ body {
   font-family: Arial, sans-serif;
   background: #0d0d0d 25%;
   color: #e0e0e0;
+  overflow: auto;
 }
 
 .custom-cursor {
@@ -27,7 +28,9 @@ a:hover ~ .custom-cursor {
 }
 
 section {
-  padding: 20px;
+  padding: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 h2 {
