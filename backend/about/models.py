@@ -1,6 +1,6 @@
 from django.db import models
 from projects.models import Category
-
+from ckeditor.fields import RichTextField
 
 class SocialMediaLink(models.Model):
     about_me = models.ForeignKey(
@@ -11,11 +11,6 @@ class SocialMediaLink(models.Model):
 
     def __str__(self):
         return f"{self.platform}: {self.url}"
-
-
-from django.db import models
-from ckeditor.fields import RichTextField
-
 
 class SocialMediaLink(models.Model):
     about_me = models.ForeignKey(
@@ -31,6 +26,7 @@ class SocialMediaLink(models.Model):
 class AboutMe(models.Model):
     name = models.CharField(max_length=100)
     summary = RichTextField()
+    current_role = models.CharField(max_length=100, default="Software Developer")
     subtitle = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True, null=True)
     profile_picture = models.ImageField(

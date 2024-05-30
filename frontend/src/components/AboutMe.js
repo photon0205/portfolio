@@ -44,7 +44,7 @@ const AboutMe = ({ aboutMe }) => {
           </div>
         </div>
         <h1 className="name">{aboutMe.name}</h1>
-        <p className="title">Software Engineer</p>
+        <p className="title">{aboutMe.current_role}</p>
         {aboutMe.subtitle && <p className="subtitle">{aboutMe.subtitle}</p>}
         <div className="social-links">
           <>
