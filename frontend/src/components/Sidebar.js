@@ -7,7 +7,7 @@ const Sidebar = ({
   closeSidebar,
   direction = "right",
 }) => {
-  const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, "");
+    const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '').replace('/api', '');
   const sidebarContainerClasses = `sidebar-container ${
     direction === "left" ? "left" : "right"
   }`;

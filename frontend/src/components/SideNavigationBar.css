@@ -1,6 +1,6 @@
 @keyframes navItemIn {
   0% {
-    width: 10rem;
+    width: 2rem;
     background-color: transparent;
   }
   100% {
@@ -15,7 +15,7 @@
     background-color: rgba(1, 1, 1, 0.8);
   }
   100% {
-    width: 10rem;
+    width: 2rem;
     background-color: transparent;
   }
 }
@@ -91,14 +91,13 @@
 
 .side-navigation-bar .nav-text {
   display: none;
-  margin-left: 10px;
+  margin-left: 2rem;
   white-space: nowrap;
   color: #ffffff;
   opacity: 0;
   transform: translateX(-10px);
   animation: textOut 0.3s ease-in-out;
   animation-fill-mode: forwards;
-  margin-left: 0;
 }
 
 .side-navigation-bar .nav-item:hover .nav-text {
@@ -108,6 +107,7 @@
 }
 
 .side-navigation-bar .nav-icon {
+  position: fixed;
   margin-right: 10px;
 }
 

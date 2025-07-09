@@ -8,6 +8,16 @@ import {
 } from "react-icons/fi";
 import "./SideNavigationBar.css";
 
+const debounce = (fn, delay) => {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+};
+
 const SideNavigationBar = ({
   handleScroll,
   aboutSectionRef,
@@ -16,40 +26,29 @@ const SideNavigationBar = ({
   openSourceSectionRef,
   contactSectionRef,
 }) => {
-  const [activeSection, setActiveSection] = useState("projects");
+  const [activeSection, setActiveSection] = useState("about");
   const scrollPositionRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const { offsetTop: projectsOffset } = projectsSectionRef.current;
-      const { offsetTop: experienceOffset } = experienceSectionRef.current;
-      const { offsetTop: openSourceOffset } = openSourceSectionRef.current;
-      const { offsetTop: contactOffset } = contactSectionRef.current;
       const scrollPosition = window.scrollY + 500;
-
       scrollPositionRef.current = scrollPosition;
 
-      if (scrollPosition < projectsOffset) {
-        setActiveSection("about");
-      } else if (scrollPosition < experienceOffset) {
-        setActiveSection("projects");
-      } else if (scrollPosition < openSourceOffset) {
-        setActiveSection("experience");
-      } else if (scrollPosition < contactOffset) {
-        setActiveSection("open-source");
-      } else {
-        setActiveSection("contact");
-      }
-    };
+      const offsets = [
+        { section: "about", ref: aboutSectionRef },
+        { section: "projects", ref: projectsSectionRef },
+        { section: "experience", ref: experienceSectionRef },
+        { section: "open-source", ref: openSourceSectionRef },
+        { section: "contact", ref: contactSectionRef },
+      ];
 
-    const debounce = (fn, delay) => {
-      let timer;
-      return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          fn(...args);
-        }, delay);
-      };
+      for (let i = offsets.length - 1; i >= 0; i--) {
+        const { section, ref } = offsets[i];
+        if (ref.current && scrollPosition >= ref.current.offsetTop) {
+          setActiveSection(section);
+          break;
+        }
+      }
     };
 
     const handleScrollThrottled = debounce(handleScroll, 100);
@@ -65,8 +64,11 @@ const SideNavigationBar = ({
   ]);
 
   const scrollToSection = (ref) => {
-    setActiveSection(ref.current.dataset.section);
-    handleScroll(ref.current);
+    if (ref?.current) {
+      setActiveSection(ref.current.dataset.section);
+      handleScroll(ref.current);
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (

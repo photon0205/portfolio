@@ -109,7 +109,7 @@ const HomePage = ({
         contactSectionRef={contactSectionRef}
       />
       <section className="home-header" ref={aboutSectionRef}>
-        <AboutMe aboutMe={aboutMe} />
+        <AboutMe aboutMe={aboutMe} contactSectionRef={contactSectionRef} />
       </section>
       <section className="projects-section" ref={projectsSectionRef}>
         <h2>Projects</h2>

@@ -1,8 +1,9 @@
 .timeline-item {
   display: flex;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   position: relative;
   transition: background 0.3s, transform 0.3s;
+  border-radius: 0.5rem;
 }
 
 .timeline-item:hover {
@@ -91,7 +92,7 @@
 
   .timeline-dates {
     font-size: 12px;
-    margin: 0;
+    margin: 0 0.5rem;
   }
 
   .timeline-details h3 {
@@ -100,6 +101,7 @@
 
   .timeline-details .description li {
     font-size: 12px;
+    margin: 0 0.5rem;
   }
 
   .timeline-details .skill {

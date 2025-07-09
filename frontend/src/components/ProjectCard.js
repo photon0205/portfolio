@@ -2,7 +2,7 @@ import React from "react";
 import "./ProjectCard.css";
 
 const ProjectCard = ({ project, handleProjectClick, type }) => {
-  const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, "");
+  const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '').replace('/api', '');
   return (
     <div className="project-card" onClick={() => handleProjectClick(project)}>
       <div className="project-image">

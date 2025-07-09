@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   FaGithub,
   FaLinkedin,
   FaTwitter,
   FaEnvelope,
   FaInstagram,
+  FaExternalLinkAlt,
 } from "react-icons/fa";
 import "./AboutMe.css";
 
-const AboutMe = ({ aboutMe }) => {
-    const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '');
+const AboutMe = ({ aboutMe, contactSectionRef }) => {
+  const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '').replace('/api', '');
 
   if (!aboutMe) {
     return <div>Loading...</div>;
@@ -31,7 +32,16 @@ const AboutMe = ({ aboutMe }) => {
         return null;
     }
   };
-  
+
+  const scrollToSection = (ref) => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const openResume = () => {
+    const resumeUrl = `${API_URL}${aboutMe.resume}`;
+    window.open(resumeUrl, "_blank", "noopener noreferrer");
+  };
+
   return (
     <header className="about-me">
       <div className="left-section">
@@ -74,6 +84,17 @@ const AboutMe = ({ aboutMe }) => {
           className="summary"
           dangerouslySetInnerHTML={{ __html: aboutMe.summary }}
         />
+        <div className="buttons-container">
+          <button className="resume-button" onClick={openResume}>
+            View Resume <FaExternalLinkAlt className="share-icon" />
+          </button>
+          <button
+            className="connect-button"
+            onClick={() => scrollToSection(contactSectionRef)}
+          >
+            Connect with me
+          </button>
+        </div>
       </div>
     </header>
   );
