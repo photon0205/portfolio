@@ -10,6 +10,8 @@ class DescriptionPointSerializer(serializers.ModelSerializer):
 class WorkExperienceSerializer(serializers.ModelSerializer):
     description = DescriptionPointSerializer(many=True, read_only=True)
     skills_used = CodingSkillSerializer(many=True, read_only=True)
+    company_logo = serializers.ImageField(required=False, allow_null=True)
+    
     class Meta:
         model = WorkExperience
         fields = '__all__'

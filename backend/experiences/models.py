@@ -12,6 +12,7 @@ class DescriptionPoint(models.Model):
 class WorkExperience(models.Model):
     title = models.CharField(max_length=100)
     company = models.CharField(max_length=100)
+    company_logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)

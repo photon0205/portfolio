@@ -1,0 +1,365 @@
+.experience-timeline-container {
+  position: relative;
+  padding: 0.5rem 0;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timeline-company-entry {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(82, 114, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem;
+  transition: all 0.3s ease;
+  display: flex;
+  gap: 1.25rem;
+}
+
+.timeline-company-entry:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(82, 114, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(82, 114, 255, 0.08);
+}
+
+.timeline-company-entry.clickable {
+  cursor: pointer;
+}
+
+.timeline-company-entry.clickable:hover .company-name {
+  color: #5272ff;
+}
+
+.timeline-dot {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(82, 114, 255, 0.1);
+  border: 2px solid rgba(82, 114, 255, 0.3);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.timeline-company-entry:hover .timeline-dot {
+  border-color: rgba(82, 114, 255, 0.5);
+  background: rgba(82, 114, 255, 0.15);
+  transform: scale(1.05);
+}
+
+.timeline-dot .company-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.timeline-dot .company-logo-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #5272ff 0%, #405fcc 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1px;
+}
+
+.timeline-content-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-company-header {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.company-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: rgb(226, 232, 240);
+  transition: color 0.3s ease;
+  letter-spacing: -0.02em;
+}
+
+.company-date-range {
+  font-size: 13px;
+  color: rgb(148, 163, 184);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.timeline-roles {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+}
+
+.timeline-role {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.timeline-role.has-next-role::before {
+  content: "";
+  position: absolute;
+  left: 5.5px;
+  top: 0.85rem;
+  bottom: -2rem;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(82, 114, 255, 0.5),
+    rgba(82, 114, 255, 0.25),
+    rgba(82, 114, 255, 0.1)
+  );
+}
+
+.role-progression-dot {
+  position: absolute;
+  left: -1px;
+  top: 0.65rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #5272ff;
+  border: 3px solid rgba(13, 13, 13, 1);
+  box-shadow: 0 0 0 1px rgba(82, 114, 255, 0.5),
+              0 2px 8px rgba(82, 114, 255, 0.4);
+  z-index: 1;
+  transition: all 0.3s ease;
+  transform: translateY(-50%);
+}
+
+.timeline-role:hover .role-progression-dot {
+  transform: translateY(-50%) scale(1.15);
+  background: #405fcc;
+  box-shadow: 0 0 0 2px rgba(82, 114, 255, 0.7),
+              0 4px 12px rgba(82, 114, 255, 0.6);
+}
+
+.role-content {
+  background: transparent;
+  border-radius: 8px;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.timeline-role:hover .role-content {
+  transform: translateX(3px);
+}
+
+.role-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.role-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  color: rgb(226, 232, 240);
+  transition: color 0.3s ease;
+}
+
+.timeline-role:hover .role-title {
+  color: #5272ff;
+}
+
+.role-date-range {
+  font-size: 13px;
+  color: rgb(148, 163, 184);
+  font-weight: 500;
+}
+
+.role-location {
+  font-size: 13px;
+  color: rgb(148, 163, 184);
+  margin: 0.35rem 0 0.85rem 0;
+}
+
+.role-description {
+  list-style: none;
+  padding: 0;
+  margin: 0.85rem 0;
+  color: rgb(148, 163, 184);
+}
+
+.role-description li {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.role-description li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #5272ff;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.role-skills {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  color: #5272ff;
+  font-weight: 600;
+  background-color: rgba(82, 114, 255, 0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(82, 114, 255, 0.15);
+  transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+  background-color: rgba(82, 114, 255, 0.15);
+  border-color: rgba(82, 114, 255, 0.35);
+  color: #405fcc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(82, 114, 255, 0.15);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .experience-timeline-container {
+    padding: 0.5rem 0;
+    gap: 1.5rem;
+  }
+
+  .timeline-company-entry {
+    padding: 1.25rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .timeline-dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+  }
+
+  .timeline-dot .company-logo-fallback {
+    font-size: 18px;
+  }
+
+  .company-name {
+    font-size: 18px;
+  }
+
+  .company-date-range {
+    font-size: 12px;
+  }
+
+  .timeline-role {
+    padding-left: 1.75rem;
+  }
+
+  .timeline-role.has-next-role::before {
+    left: 5px;
+    top: 0.85rem;
+  }
+
+  .role-progression-dot {
+    width: 12px;
+    height: 12px;
+    left: -1px;
+    top: 0.5rem;
+  }
+
+  .timeline-role:hover .role-progression-dot {
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  .role-title {
+    font-size: 16px;
+  }
+
+  .role-description li {
+    font-size: 13px;
+  }
+
+  .skill-tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-company-entry {
+    padding: 1rem;
+  }
+
+  .timeline-dot {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+  }
+
+  .timeline-dot .company-logo-fallback {
+    font-size: 16px;
+  }
+
+  .company-name {
+    font-size: 17px;
+  }
+
+  .timeline-role {
+    padding-left: 1.5rem;
+  }
+
+  .timeline-role.has-next-role::before {
+    left: 4px;
+    top: 0.75rem;
+  }
+
+  .role-progression-dot {
+    width: 10px;
+    height: 10px;
+    left: -1px;
+    border-width: 2px;
+    top: 0.45rem;
+  }
+
+  .timeline-role:hover .role-progression-dot {
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  .role-title {
+    font-size: 15px;
+  }
+
+  .skill-tag {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+

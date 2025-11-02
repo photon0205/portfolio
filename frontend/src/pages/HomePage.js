@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchOpenSourceProjects } from "../services/openSourceService";
 import { fetchProjects } from "../services/projectService";
 import { fetchWorkExperiences } from "../services/experienceService";
-import ExperienceCard from "../components/ExperienceCard";
+import ExperienceTimeline from "../components/ExperienceTimeline";
 import { fetchAboutMe } from "../services/aboutService";
 import ProjectCard from "../components/ProjectCard";
 import Sidebar from "../components/Sidebar";
@@ -45,18 +45,57 @@ const HomePage = ({
     handleScroll(projectsSectionRef.current);
   };
 
-  const sortedExperiences = experiences?.sort((a, b) => {
-    const startA = new Date(a.start_date);
-    const startB = new Date(b.start_date);
-    const endA = a.end_date ? new Date(a.end_date) : new Date();
-    const endB = b.end_date ? new Date(b.end_date) : new Date();
+  // Group experiences by company and sort chronologically
+  const groupedExperiencesByCompany = React.useMemo(() => {
+    if (!experiences || experiences.length === 0) return [];
 
-    if (endA < endB) return 1;
-    if (endA > endB) return -1;
-    if (startA < startB) return 1;
-    if (startA > startB) return -1;
-    return 0;
-  });
+    // Sort all experiences chronologically
+    const sortedExperiences = [...experiences].sort((a, b) => {
+      const startA = new Date(a.start_date);
+      const startB = new Date(b.start_date);
+      const endA = a.end_date ? new Date(a.end_date) : new Date();
+      const endB = b.end_date ? new Date(b.end_date) : new Date();
+
+      if (endA < endB) return 1;
+      if (endA > endB) return -1;
+      if (startA < startB) return 1;
+      if (startA > startB) return -1;
+      return 0;
+    });
+
+    // Group by company name
+    const companyMap = new Map();
+    
+    sortedExperiences.forEach((experience) => {
+      const companyName = experience.company;
+      if (!companyMap.has(companyName)) {
+        companyMap.set(companyName, {
+          company: companyName,
+          roles: [],
+          logo: experience.company_logo || null,
+          location: experience.location,
+        });
+      }
+      
+      const companyGroup = companyMap.get(companyName);
+      // Use the logo from any role that has one (prefer non-null)
+      if (experience.company_logo && !companyGroup.logo) {
+        companyGroup.logo = experience.company_logo;
+      }
+      companyGroup.roles.push(experience);
+    });
+
+    // Convert map to array and sort by earliest role start date
+    return Array.from(companyMap.values()).sort((a, b) => {
+      const earliestA = new Date(
+        Math.min(...a.roles.map((r) => new Date(r.start_date)))
+      );
+      const earliestB = new Date(
+        Math.min(...b.roles.map((r) => new Date(r.start_date)))
+      );
+      return earliestB - earliestA; // Most recent first
+    });
+  }, [experiences]);
 
   useEffect(() => {
     // Progressive loading: Load critical data first, then rest
@@ -144,10 +183,8 @@ const HomePage = ({
       <section className="experience-section" ref={experienceSectionRef}>
         <h2>Work Experience</h2>
         <div className="experience-timeline">
-          {sortedExperiences && sortedExperiences.length > 0 ? (
-            sortedExperiences.map((experience) => (
-              <ExperienceCard key={experience.id} experience={experience} />
-            ))
+          {groupedExperiencesByCompany && groupedExperiencesByCompany.length > 0 ? (
+            <ExperienceTimeline groupedExperiences={groupedExperiencesByCompany} />
           ) : experiences.length === 0 ? (
             // Show skeleton while loading
             <>
