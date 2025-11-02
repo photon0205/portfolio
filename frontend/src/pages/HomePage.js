@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchOpenSourceProjects } from "../services/openSourceService";
-import { fetchCategories, fetchProjects } from "../services/projectService";
+import { fetchProjects } from "../services/projectService";
 import { fetchWorkExperiences } from "../services/experienceService";
 import ExperienceCard from "../components/ExperienceCard";
 import { fetchAboutMe } from "../services/aboutService";
@@ -8,7 +8,7 @@ import ProjectCard from "../components/ProjectCard";
 import Sidebar from "../components/Sidebar";
 import AboutMe from "../components/AboutMe";
 import Footer from "../components/Footer";
-import { CategoryTabsSkeleton, ProjectCardSkeleton, ExperienceCardSkeleton } from "../components/Skeleton";
+import { ProjectCardSkeleton, ExperienceCardSkeleton } from "../components/Skeleton";
 import "./HomePage.css";
 import SideNavigationBar from "../components/SideNavigationBar";
 import { FaArrowUp } from "react-icons/fa";
@@ -25,16 +25,10 @@ const HomePage = ({
   const [openSourceProjects, setOpenSourceProjects] = useState(null);
   const [experiences, setExperiences] = useState([]);
   const [aboutMe, setAboutMe] = useState(null);
-  const [categories, setCategories] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedOpenSourceProject, setSelectedOpenSourceProject] =
     useState(null);
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);
-
-  const filteredProjects = projects?.filter(
-    (project) => project?.category.slug === selectedCategory
-  );
 
   const handleOpenSourceProjectClick = (project) => {
     setSelectedOpenSourceProject(project);
@@ -76,10 +70,6 @@ const HomePage = ({
       fetchOpenSourceProjects().then((response) =>
         setOpenSourceProjects(response.data)
       ),
-      fetchCategories().then((response) => {
-        setCategories(response.data);
-        setSelectedCategory(response.data[0]?.slug);
-      }),
     ]).catch((error) => {
       console.error("Error loading portfolio data:", error);
     });
@@ -122,24 +112,9 @@ const HomePage = ({
       <section className="projects-section" ref={projectsSectionRef}>
         <h2>Projects</h2>
         <div className="project-tabs">
-          {categories && categories.length > 0 ? (
-            <ul className="category-tabs">
-              {categories.map((category) => (
-                <li
-                  key={category.id}
-                  className={selectedCategory === category.slug ? "active" : ""}
-                  onClick={() => setSelectedCategory(category.slug)}
-                >
-                  {category.name}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <CategoryTabsSkeleton />
-          )}
           <div className="projects-list">
-            {filteredProjects && filteredProjects.length > 0 ? (
-              filteredProjects.map((project) => (
+            {projects && projects.length > 0 ? (
+              projects.map((project) => (
                 <ProjectCard
                   key={project.id}
                   type="project"
@@ -147,8 +122,8 @@ const HomePage = ({
                   handleProjectClick={handleProjectClick}
                 />
               ))
-            ) : projects.length === 0 && categories ? (
-              // Show skeleton only if categories are loaded but no projects yet
+            ) : projects.length === 0 ? (
+              // Show skeleton while loading
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px', width: '100%' }}>
                 {[1, 2, 3].map((i) => (
                   <ProjectCardSkeleton key={i} />
