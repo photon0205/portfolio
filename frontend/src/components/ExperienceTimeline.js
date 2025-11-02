@@ -34,19 +34,31 @@ const ExperienceTimeline = ({ groupedExperiences }) => {
     return { start: startFormatted, end: endFormatted };
   };
 
-  // Get company logo URL
+  // Get company logo URL - handles both API and JSON sources consistently
   const getCompanyLogoUrl = (logo) => {
     if (!logo) return null;
-    // If logo is already a full URL, return it
-    if (logo.startsWith("http")) return logo;
-    // If logo starts with /media, it's a Django media path
+    
+    // If logo is already a full URL (http/https), return it as-is
+    if (logo.startsWith("http://") || logo.startsWith("https://")) {
+      return logo;
+    }
+    
+    // Get base URL for API/media files
+    const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+    
+    // If logo starts with /media, it's a Django media path (from API or exported JSON)
     if (logo.startsWith("/media")) {
-      const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
       return `${baseUrl}${logo}`;
     }
-    // Otherwise, assume it's a media path and prepend /media
-    const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
-    return `${baseUrl}/media/${logo}`;
+    
+    // If logo doesn't start with /, assume it's a relative media path and prepend /media/
+    // This handles cases where JSON might store just the filename or relative path
+    if (!logo.startsWith("/")) {
+      return `${baseUrl}/media/${logo}`;
+    }
+    
+    // If it starts with / but not /media, assume it's a relative path from base URL
+    return `${baseUrl}${logo}`;
   };
 
   return (
@@ -59,7 +71,6 @@ const ExperienceTimeline = ({ groupedExperiences }) => {
           new Date(b.start_date) - new Date(a.start_date)
         );
         const logoUrl = getCompanyLogoUrl(logo);
-
         // Get website from any role (prefer non-empty)
         const companyWebsite = sortedRoles.find(r => r.website)?.website || null;
         const isClickable = companyWebsite ? true : false;
