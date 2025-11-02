@@ -8,6 +8,7 @@ import ProjectCard from "../components/ProjectCard";
 import Sidebar from "../components/Sidebar";
 import AboutMe from "../components/AboutMe";
 import Footer from "../components/Footer";
+import { CategoryTabsSkeleton, ProjectCardSkeleton, ExperienceCardSkeleton } from "../components/Skeleton";
 import "./HomePage.css";
 import SideNavigationBar from "../components/SideNavigationBar";
 import { FaArrowUp } from "react-icons/fa";
@@ -64,15 +65,23 @@ const HomePage = ({
   });
 
   useEffect(() => {
-    fetchProjects().then((response) => setProjects(response.data));
-    fetchWorkExperiences().then((response) => setExperiences(response.data));
+    // Progressive loading: Load critical data first, then rest
+    // Load AboutMe first (most important for initial render)
     fetchAboutMe().then((response) => setAboutMe(response.data));
-    fetchOpenSourceProjects().then((response) =>
-      setOpenSourceProjects(response.data)
-    );
-    fetchCategories().then((response) => {
-      setCategories(response.data);
-      setSelectedCategory(response.data[0]?.slug);
+    
+    // Load rest in parallel (non-blocking)
+    Promise.all([
+      fetchProjects().then((response) => setProjects(response.data)),
+      fetchWorkExperiences().then((response) => setExperiences(response.data)),
+      fetchOpenSourceProjects().then((response) =>
+        setOpenSourceProjects(response.data)
+      ),
+      fetchCategories().then((response) => {
+        setCategories(response.data);
+        setSelectedCategory(response.data[0]?.slug);
+      }),
+    ]).catch((error) => {
+      console.error("Error loading portfolio data:", error);
     });
 
     const handleScrollEvent = () => {
@@ -94,9 +103,8 @@ const HomePage = ({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (!aboutMe) {
-    return <div>Loading...</div>;
-  }
+  // Show skeleton/progressive UI instead of blocking loader
+  // AboutMe is critical, rest can load progressively
 
   return (
     <div className="home-page">
@@ -114,26 +122,39 @@ const HomePage = ({
       <section className="projects-section" ref={projectsSectionRef}>
         <h2>Projects</h2>
         <div className="project-tabs">
-          <ul className="category-tabs">
-            {categories?.map((category) => (
-              <li
-                key={category.id}
-                className={selectedCategory === category.slug ? "active" : ""}
-                onClick={() => setSelectedCategory(category.slug)}
-              >
-                {category.name}
-              </li>
-            ))}
-          </ul>
+          {categories && categories.length > 0 ? (
+            <ul className="category-tabs">
+              {categories.map((category) => (
+                <li
+                  key={category.id}
+                  className={selectedCategory === category.slug ? "active" : ""}
+                  onClick={() => setSelectedCategory(category.slug)}
+                >
+                  {category.name}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <CategoryTabsSkeleton />
+          )}
           <div className="projects-list">
-            {filteredProjects?.map((project) => (
-              <ProjectCard
-                key={project.id}
-                type="project"
-                project={project}
-                handleProjectClick={handleProjectClick}
-              />
-            ))}
+            {filteredProjects && filteredProjects.length > 0 ? (
+              filteredProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  type="project"
+                  project={project}
+                  handleProjectClick={handleProjectClick}
+                />
+              ))
+            ) : projects.length === 0 && categories ? (
+              // Show skeleton only if categories are loaded but no projects yet
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px', width: '100%' }}>
+                {[1, 2, 3].map((i) => (
+                  <ProjectCardSkeleton key={i} />
+                ))}
+              </div>
+            ) : null}
           </div>
           {selectedProject && (
             <Sidebar
@@ -148,23 +169,41 @@ const HomePage = ({
       <section className="experience-section" ref={experienceSectionRef}>
         <h2>Work Experience</h2>
         <div className="experience-timeline">
-          {sortedExperiences?.map((experience) => (
-            <ExperienceCard key={experience.id} experience={experience} />
-          ))}
+          {sortedExperiences && sortedExperiences.length > 0 ? (
+            sortedExperiences.map((experience) => (
+              <ExperienceCard key={experience.id} experience={experience} />
+            ))
+          ) : experiences.length === 0 ? (
+            // Show skeleton while loading
+            <>
+              {[1, 2, 3].map((i) => (
+                <ExperienceCardSkeleton key={i} />
+              ))}
+            </>
+          ) : null}
         </div>
       </section>
       <section className="projects-section" ref={openSourceSectionRef}>
         <h2>Open Source Contributions</h2>
         <div className="projects-tabs">
           <div className="projects-list">
-            {openSourceProjects?.map((project) => (
-              <ProjectCard
-                key={project.id}
-                type="open-source"
-                project={project}
-                handleProjectClick={handleOpenSourceProjectClick}
-              />
-            ))}
+            {openSourceProjects && openSourceProjects.length > 0 ? (
+              openSourceProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  type="open-source"
+                  project={project}
+                  handleProjectClick={handleOpenSourceProjectClick}
+                />
+              ))
+            ) : openSourceProjects === null ? (
+              // Show skeleton while loading (null means still loading, [] means loaded but empty)
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px', width: '100%' }}>
+                {[1, 2, 3].map((i) => (
+                  <ProjectCardSkeleton key={i} />
+                ))}
+              </div>
+            ) : null}
           </div>
           {selectedOpenSourceProject && (
             <Sidebar

@@ -28,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prebuild": "node -e \"const fs=require('fs'); const portfolioFile='public/data/portfolio.json'; if(!fs.existsSync(portfolioFile)) { console.warn('⚠️  WARNING: portfolio.json not found in public/data/. Run: python backend/manage.py export_data'); }\""
   },
   "eslintConfig": {
     "extends": [

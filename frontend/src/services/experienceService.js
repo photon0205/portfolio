@@ -1,5 +1,10 @@
-import api from './api';
+import { fetchPortfolioData } from './portfolioService';
 
-export const fetchWorkExperiences = () => {
-  return api.get('experiences/');
+/**
+ * Fetch work experiences data from common portfolio JSON file.
+ * Falls back to API if JSON file doesn't exist (for development).
+ */
+export const fetchWorkExperiences = async () => {
+  const portfolioData = await fetchPortfolioData();
+  return { data: portfolioData.experiences || [] };
 };

@@ -7,6 +7,7 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 import logo from "../assets/logo.png";
+import { SocialLinksSkeleton } from "./Skeleton";
 import "./Footer.css";
 import ContactForm from "./ContactForm";
 
@@ -27,6 +28,35 @@ const Footer = ({ aboutMe }) => {
         return null;
     }
   };
+
+  // Handle null/undefined aboutMe during progressive loading
+  if (!aboutMe) {
+    return (
+      <footer className="footer">
+        <div className="footer-sections">
+          <div className="left-footer-section">
+            <ContactForm />
+          </div>
+          <div className="right-footer-section">
+            <div className="footer-logo">
+              <img src={logo} alt="Logo" />
+            </div>
+            <p className="footer-caption">
+              Living, learning, & leveling up one day at a time.
+            </p>
+            <div className="footer-icons">
+              <SocialLinksSkeleton />
+            </div>
+            <p className="copyright">
+              &copy; {new Date().getFullYear()} Sahajpreet Singh. All Rights
+              Reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="footer">
       <div className="footer-sections">
@@ -41,7 +71,7 @@ const Footer = ({ aboutMe }) => {
             Living, learning, & leveling up one day at a time.
           </p>
           <div className="footer-icons">
-            {aboutMe.social_links.map((link) => (
+            {aboutMe.social_links && aboutMe.social_links.map((link) => (
               <a
                 key={link.platform}
                 href={link.url}
@@ -51,13 +81,15 @@ const Footer = ({ aboutMe }) => {
                 {getIcon(link.platform)}
               </a>
             ))}
-            <a
-              href={`mailto:${aboutMe.email}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {getIcon("email")}
-            </a>
+            {aboutMe.email && (
+              <a
+                href={`mailto:${aboutMe.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {getIcon("email")}
+              </a>
+            )}
           </div>
           <p className="copyright">
             &copy; {new Date().getFullYear()} Sahajpreet Singh. All Rights

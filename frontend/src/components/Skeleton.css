@@ -1,0 +1,58 @@
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #e0e0e0 50%,
+    #f0f0f0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.category-tab-skeleton {
+  list-style: none;
+  margin-right: 16px;
+}
+
+.project-card-skeleton {
+  margin-bottom: 24px;
+}
+
+.project-image-skeleton {
+  aspect-ratio: 16/9;
+}
+
+.timeline-item-skeleton {
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-dates-skeleton {
+  margin-bottom: 12px;
+}
+
+.social-links-skeleton {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.social-links-skeleton .skeleton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+

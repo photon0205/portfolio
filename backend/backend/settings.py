@@ -151,3 +151,12 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Portfolio Data Export Configuration
+# Auto-detect path: production server vs local development
+EXPORT_DATA_DIR = os.environ.get(
+    "EXPORT_DATA_DIR",
+    os.path.join(BASE_DIR.parent, "frontend", "public", "data")
+    if os.path.exists(os.path.join(BASE_DIR.parent, "frontend"))
+    else "/var/www/portfolio/static/data"
+)

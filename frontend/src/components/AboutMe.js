@@ -7,13 +7,36 @@ import {
   FaInstagram,
   FaExternalLinkAlt,
 } from "react-icons/fa";
+import { Skeleton, SocialLinksSkeleton } from "./Skeleton";
 import "./AboutMe.css";
 
 const AboutMe = ({ aboutMe, contactSectionRef }) => {
-  const API_URL = process.env.REACT_APP_API_URL.replace(/\/+$/, '').replace('/api', '');
+  const API_URL = process.env.REACT_APP_API_URL?.replace(/\/+$/, '')?.replace('/api', '') || '';
 
+  // Progressive loading: show skeleton or placeholder if data not ready
   if (!aboutMe) {
-    return <div>Loading...</div>;
+    return (
+      <header className="about-me">
+        <div className="left-section">
+          <div className="avatar-container">
+            <Skeleton width="200px" height="200px" borderRadius="50%" className="profile-picture" />
+          </div>
+          <Skeleton width="200px" height="40px" borderRadius="4px" style={{ margin: '20px 0 10px' }} />
+          <Skeleton width="150px" height="24px" borderRadius="4px" style={{ margin: '10px 0' }} />
+          <Skeleton width="120px" height="20px" borderRadius="4px" style={{ margin: '10px 0' }} />
+          <SocialLinksSkeleton />
+        </div>
+        <div className="right-section">
+          <Skeleton width="100%" height="60px" borderRadius="8px" style={{ marginBottom: '16px' }} />
+          <Skeleton width="100%" height="60px" borderRadius="8px" style={{ marginBottom: '16px' }} />
+          <Skeleton width="80%" height="60px" borderRadius="8px" style={{ marginBottom: '24px' }} />
+          <div style={{ display: 'flex', gap: '16px', marginTop: '20px' }}>
+            <Skeleton width="140px" height="44px" borderRadius="6px" />
+            <Skeleton width="140px" height="44px" borderRadius="6px" />
+          </div>
+        </div>
+      </header>
+    );
   }
 
   const getIcon = (platform) => {
