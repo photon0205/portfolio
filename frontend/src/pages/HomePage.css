@@ -2,6 +2,14 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide vertical scrollbar on home page container */
+.home-page::-webkit-scrollbar {
+  display: none;
 }
 
 .experience-timeline {
@@ -45,7 +53,7 @@
 .projects-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 20px;
   gap: 20px;
   width: 100%;

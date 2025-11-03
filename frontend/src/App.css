@@ -1,10 +1,61 @@
+/* Hide scrollbars on html and body - main page scrollbars */
+html {
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: #0d0d0d 25%;
+  background: #0d0d0d;
   color: #e0e0e0;
   overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Scrollbar styling - transparent background (only for internal containers like sidebar) */
+.sidebar-container::-webkit-scrollbar,
+.category-tabs::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.sidebar-container::-webkit-scrollbar-track,
+.category-tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb,
+.category-tabs::-webkit-scrollbar-thumb {
+  background: rgba(82, 114, 255, 0.3);
+  border-radius: 5px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:hover,
+.category-tabs::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 114, 255, 0.5);
+}
+
+/* Firefox scrollbar - only for specific containers */
+.sidebar-container,
+.category-tabs {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(82, 114, 255, 0.3) transparent;
 }
 
 .custom-cursor {
@@ -16,15 +67,19 @@ body {
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s ease-out, width 0.1s ease-out, height 0.1s ease-out;
-  z-index: -1;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+  transition: all 0.4s ease-out;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  filter: blur(40px);
 }
 
-a:hover ~ .custom-cursor {
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle at center, #fe5d5b 0%, rgba(254, 93, 91, 0.3) 50%, rgba(254, 93, 91, 0) 100%);
+/* Cursor styles for different backgrounds - very diffused */
+.cursor-solid {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+}
+
+.cursor-gradient-mesh {
+  background: radial-gradient(circle at center, rgba(82, 114, 255, 0.08) 0%, rgba(138, 43, 226, 0.05) 30%, transparent 60%);
 }
 
 section {
