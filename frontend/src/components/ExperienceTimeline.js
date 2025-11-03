@@ -12,11 +12,14 @@ const ExperienceTimeline = ({ groupedExperiences }) => {
       .slice(0, 2);
   };
 
-  // Helper function to format date
+  // Helper function to format date with normal casing
   const formatDate = (dateString) => {
     if (!dateString) return "Present";
     const date = new Date(dateString);
-    return `${date.toLocaleString("default", { month: "long" })}, ${date.getFullYear()}`;
+    const month = date.toLocaleString("default", { month: "long" });
+    // Capitalize first letter, lowercase the rest
+    const monthFormatted = month.charAt(0).toUpperCase() + month.slice(1).toLowerCase();
+    return `${monthFormatted} ${date.getFullYear()}`;
   };
 
   // Get overall date range for a company
@@ -125,9 +128,11 @@ const ExperienceTimeline = ({ groupedExperiences }) => {
                     <div className="role-content">
                       <div className="role-header">
                         <h4 className="role-title">{role.title}</h4>
-                        <span className="role-date-range">
-                          {formatDate(role.start_date)} - {formatDate(role.end_date)}
-                        </span>
+                        {sortedRoles.length > 1 && (
+                          <span className="role-date-range">
+                            {formatDate(role.start_date)} - {formatDate(role.end_date)}
+                          </span>
+                        )}
                       </div>
                       {role.location && (
                         <p className="role-location">{role.location}</p>
