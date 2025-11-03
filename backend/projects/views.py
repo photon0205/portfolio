@@ -6,7 +6,7 @@ from .serializers import ProjectSerializer, CategorySerializer, CodingSkillSeria
 
 class ProjectAPIView(APIView):
     def get(self, request):
-        projects = Project.objects.all()
+        projects = Project.objects.all().order_by('display_order', '-start_date', 'title')
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
     

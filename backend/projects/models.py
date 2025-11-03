@@ -29,9 +29,13 @@ class Project(models.Model):
     live_demo_link = models.URLField(blank=True)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
+    display_order = models.IntegerField(default=0, help_text="Order in which projects are displayed (lower numbers appear first)")
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering = ['display_order', '-start_date', 'title']
 
 class ProjectImage(models.Model):
     CATEGORY_CHOICES = [

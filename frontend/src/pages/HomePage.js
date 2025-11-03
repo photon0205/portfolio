@@ -30,6 +30,27 @@ const HomePage = ({
     useState(null);
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);
 
+  // Sort projects by display_order, then by start_date (newest first), then by title
+  const sortedProjects = React.useMemo(() => {
+    if (!projects || projects.length === 0) return [];
+    return [...projects].sort((a, b) => {
+      // First sort by display_order (lower numbers first)
+      const orderA = a.display_order !== undefined ? a.display_order : 0;
+      const orderB = b.display_order !== undefined ? b.display_order : 0;
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+      // Then by start_date (newest first)
+      const dateA = new Date(a.start_date);
+      const dateB = new Date(b.start_date);
+      if (dateB.getTime() !== dateA.getTime()) {
+        return dateB - dateA;
+      }
+      // Finally by title (alphabetical)
+      return (a.title || '').localeCompare(b.title || '');
+    });
+  }, [projects]);
+
   const handleOpenSourceProjectClick = (project) => {
     setSelectedOpenSourceProject(project);
   };
@@ -152,8 +173,8 @@ const HomePage = ({
         <h2>Projects</h2>
         <div className="project-tabs">
           <div className="projects-list">
-            {projects && projects.length > 0 ? (
-              projects.map((project) => (
+            {sortedProjects && sortedProjects.length > 0 ? (
+              sortedProjects.map((project) => (
                 <ProjectCard
                   key={project.id}
                   type="project"
