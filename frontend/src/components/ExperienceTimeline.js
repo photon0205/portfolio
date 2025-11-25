@@ -46,7 +46,6 @@ const ExperienceTimeline = ({ groupedExperiences }) => {
       return logo;
     }
     
-    // Get base URL for API/media files
     const baseUrl = process.env.REACT_APP_API_URL.replace(/\/+$/, '').replace('/api', '')  || "http://localhost:8000";
     
     // If logo starts with /media, it's a Django media path (from API or exported JSON)
