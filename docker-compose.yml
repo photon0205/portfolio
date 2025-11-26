@@ -8,6 +8,7 @@ services:
     volumes:
       - ./backend/media:/app/media
       - ./backend/staticfiles:/app/staticfiles
+      - shared-data:/db_dump
     env_file:
       - ./backend/.env
     restart: unless-stopped
@@ -19,9 +20,16 @@ services:
     container_name: portfolio-frontend
     ports:
       - "3006:3000"
+    volumes:
+      - shared-data:/db_dump
+    env_file:
+      - ./frontend/.env
     restart: unless-stopped
     networks:
       - portfolio-network
+
+volumes:
+  shared-data:
 
 networks:
   portfolio-network:

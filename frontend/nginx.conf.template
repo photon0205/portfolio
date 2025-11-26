@@ -7,7 +7,7 @@ server {
 
     # Serve portfolio.json from shared volume
     location /data/ {
-        alias /usr/share/nginx/html/data/;
+        alias ${DATA_DIR}/;
         try_files $uri =404;
     }
 
