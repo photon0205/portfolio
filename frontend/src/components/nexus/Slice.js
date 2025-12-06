@@ -78,14 +78,11 @@ export const Slice = ({
             className={`w-full h-full overflow-x-hidden ${disableParentScroll ? 'overflow-hidden' : 'overflow-y-auto custom-scrollbar'}`}
           >
              {/* Sticky Header inside the slice */}
-            <div className="sticky top-0 z-20 bg-background/90 backdrop-blur-md border-b border-white/10 px-6 pt-6 pb-4 flex justify-between items-end">
-              <div className="pt-2">
-                {id !== 'hero' ? (
-                  <span className="text-primary font-mono text-xs tracking-widest mb-1 block">0{index + 1} {'//'} {subtitle}</span>
-                ) : (
-                  <span className="mb-1 block" style={{ height: '1.25rem' }} /> // leave space
-                )}
-                <h2 className="text-3xl md:text-4xl font-sans font-bold text-white tracking-tighter leading-tight">{title}</h2>
+            <div className="sticky top-0 z-20 bg-background/90 backdrop-blur-md border-b border-white/10" style={{ paddingTop: '1.5rem', paddingBottom: '1rem' }}>
+              <div className="flex items-center" style={{ paddingLeft: id === 'hero' ? 'calc(2rem + 1.75rem + 1rem)' : '2rem' }}>
+                <h2 className="text-3xl md:text-4xl font-sans font-bold text-white tracking-tighter leading-[1.75rem] whitespace-nowrap" style={{ display: 'flex', alignItems: 'center', height: '1.75rem' }}>
+                  {title}
+                </h2>
               </div>
             </div>
             

@@ -7,6 +7,7 @@ import { TechStack, TechBackground } from './sections/TechStack';
 import { About, AboutBackground } from './sections/About';
 import { Github, Twitter, Linkedin } from 'lucide-react';
 import { fetchPortfolioData } from './services/portfolioService';
+import logoImage from './assets/logo.png';
 import './index.css';
 
 function App() {
@@ -14,7 +15,6 @@ function App() {
   const [hoveredSection, setHoveredSection] = useState(null);
   const [portfolioData, setPortfolioData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [logoError, setLogoError] = useState(false);
 
   // Fetch portfolio data on mount
     useEffect(() => {
@@ -38,10 +38,6 @@ function App() {
     return () => window.removeEventListener('activateSection', handleActivateSection);
   }, []);
 
-  // Reset logo error when portfolio data changes
-  useEffect(() => {
-    setLogoError(false);
-  }, [portfolioData]);
 
   // Generate brand name from user's name (first letter of first name + last name initial)
   const getBrandName = (name) => {
@@ -97,10 +93,6 @@ function App() {
   const twitterLink = portfolioData?.about?.social_links?.find(l => l.platform === 'Twitter')?.url || '#';
   const linkedinLink = portfolioData?.about?.social_links?.find(l => l.platform === 'LinkedIn')?.url || '#';
   
-  // Get logo - prefer avatar, fallback to profile_picture
-  const logoUrl = portfolioData?.about?.avatar || portfolioData?.about?.profile_picture;
-  const hasLogo = !!logoUrl;
-
   return (
     <div className="relative h-screen w-screen bg-background overflow-hidden font-sans text-textMain selection:bg-primary selection:text-white">
       <CustomCursor />
@@ -111,16 +103,22 @@ function App() {
       {/* Floating Header (Always Visible) - Top Left Brand */}
       <div className="fixed top-6 left-8 z-[100] pointer-events-none mix-blend-difference">
         <div className="flex items-center gap-2.5">
-          {hasLogo && !logoError ? (
-            <img 
-              src={logoUrl} 
-              alt={displayName}
-              className="w-7 h-7 rounded-full object-cover border border-white/20 shrink-0"
-              onError={() => setLogoError(true)}
-            />
-          ) : (
-            <h1 className="text-lg font-bold tracking-tighter whitespace-nowrap">{brandName}<span className="text-primary">.</span>DEV</h1>
-          )}
+          <img 
+            src={logoImage} 
+            alt={displayName}
+            className="w-7 h-7 rounded-full object-cover border border-white/20 shrink-0"
+            onError={() => {
+              // Fallback to brand name if logo fails to load
+              const img = document.querySelector('img[src*="logo.png"]');
+              if (img) {
+                img.style.display = 'none';
+                const brandEl = document.createElement('h1');
+                brandEl.className = 'text-lg font-bold tracking-tighter whitespace-nowrap';
+                brandEl.innerHTML = `${brandName}<span class="text-primary">.</span>DEV`;
+                img.parentElement?.appendChild(brandEl);
+              }
+            }}
+          />
         </div>
       </div>
 
