@@ -235,3 +235,67 @@ html {
   overflow-wrap: anywhere;
 }
 
+/* Prevent layout shifts in projects container */
+.projects-layout-stable {
+  contain: layout;
+}
+
+.project-sidebar-stable {
+  flex-shrink: 0;
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+}
+
+.project-content-stable {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Ensure consistent text rendering */
+.text-stable {
+  text-rendering: optimizeSpeed;
+  contain: style layout;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Prevent hover-induced layout shifts */
+.hover-stable {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+  contain: layout style;
+}
+
+/* Stabilize flex layouts */
+.flex-stable {
+  flex-shrink: 0;
+  flex-grow: 0;
+  contain: layout;
+}
+
+/* Prevent section hover from affecting content */
+.section-layout-stable {
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+@media (min-width: 1280px) {
+  .project-sidebar-stable {
+    flex-shrink: 0;
+  }
+
+  /* Match About bio: fixed column width + no flex shrink so text does not reflow when layout flexes */
+  .project-content-stable {
+    flex: 0 0 600px;
+    width: 600px;
+    min-width: 600px;
+    max-width: 600px;
+    flex-shrink: 0;
+    contain: layout;
+  }
+}
+

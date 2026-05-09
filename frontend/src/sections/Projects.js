@@ -92,7 +92,7 @@ const parseProjectSections = (description) => {
   return { intro, sections };
 };
 
-export const Projects = ({ projects = [] }) => {
+export const Projects = ({ projects = [], isActive = false }) => {
   // Sort projects by display_order
   const sortedProjects = useMemo(() => {
     if (!projects || projects.length === 0) return [];
@@ -123,7 +123,7 @@ export const Projects = ({ projects = [] }) => {
   }
 
   return (
-    <div className="projects-container gap-4 xl:gap-8 px-4 md:px-6 xl:px-12 min-w-0">
+    <div className="projects-container projects-layout-stable gap-4 xl:gap-8 px-4 md:px-6 xl:px-12 min-w-0">
       {/* Mobile: Horizontal Tabs */}
       <div className="xl:hidden pt-4">
         <div className="flex overflow-x-auto gap-2 pb-4 scrollbar-hide">
@@ -144,40 +144,66 @@ export const Projects = ({ projects = [] }) => {
       </div>
 
       {/* Desktop: Sidebar */}
-      <div className="hidden xl:flex xl:w-[320px] xl:min-w-[320px] xl:max-w-[360px] flex-col gap-4 overflow-y-auto project-list-scrollbar pr-2 pt-8 shrink-0 max-h-full flex-1">
-        {sortedProjects.map((p) => (
-          <button
-            key={p.id}
-            onClick={() => setActiveProject(p)}
-            className={`text-left p-6 border transition-all duration-300 group relative overflow-hidden shrink-0 ${activeProject?.id === p.id
-                ? 'border-primary bg-primary/10'
-                : 'border-white/10 bg-white/5 hover:border-white/30'
+      <div className="hidden xl:flex project-sidebar-stable flex-col gap-4 overflow-y-auto project-list-scrollbar pr-2 pt-8 shrink-0 max-h-full hover-stable">
+        {sortedProjects.map((p) => {
+          const isSelected = activeProject?.id === p.id;
+          return (
+            <motion.button
+              key={p.id}
+              onClick={() => setActiveProject(p)}
+              whileHover={isActive && !isSelected ? { y: -3, transition: { duration: 0.18, ease: 'easeOut' } } : {}}
+              className={`text-left p-6 border transition-colors duration-300 group relative overflow-hidden shrink-0 hover-stable ${
+                isSelected
+                  ? 'border-primary bg-primary/10'
+                  : 'border-white/10 bg-white/5 hover:border-primary/40 hover:bg-primary/5'
               }`}
-          >
-            <div className={`absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent transition-transform duration-500 ${activeProject?.id === p.id ? 'translate-x-0' : '-translate-x-full'}`} />
+            >
+              <div className={`absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent transition-transform duration-500 ${isSelected ? 'translate-x-0' : '-translate-x-full'}`} />
 
-            <div className="relative z-10">
-              <span className="text-xs font-mono text-primary mb-1 block uppercase">{p.category?.name || 'Project'}</span>
-              <h3 className="text-lg font-bold text-white group-hover:translate-x-2 transition-transform leading-tight text-break">{p.title}</h3>
-              <p className="text-sm text-textMuted mt-2 line-clamp-3 leading-relaxed text-break">{p.caption}</p>
+              <div className="relative z-10">
+                {/* Category label:
+                    • section inactive → purple (text-primary)
+                    • section active, this card selected → purple (contrasting with white title)
+                    • section active, not selected → dimmed purple, brightens on hover */}
+                <span className={`text-xs font-mono mb-1 block uppercase transition-colors duration-300 ${
+                  !isActive
+                    ? 'text-primary'
+                    : isSelected
+                      ? 'text-primary'
+                      : 'text-primary/50 group-hover:text-primary'
+                }`}>{p.category?.name || 'Project'}</span>
 
-              <div className="flex gap-2 mt-4 flex-wrap">
-                {p.skills_used?.slice(0, 3).map(skill => (
-                  <span key={skill.id} className="text-[10px] uppercase tracking-wider px-2 py-1 bg-black/50 rounded text-textMuted border border-white/5 text-break">
-                    {skill.name}
-                  </span>
-                ))}
-                {p.skills_used?.length > 3 && (
-                  <span className="text-[10px] px-2 py-1 bg-black/50 rounded text-textMuted border border-white/5">+{p.skills_used.length - 3}</span>
-                )}
+                {/* Title:
+                    • section inactive → purple (both purple, no contrast)
+                    • section active, selected → white (contrasting with purple category)
+                    • section active, not selected → muted, brightens to white on hover */}
+                <h3 className={`text-lg font-bold leading-tight text-break text-stable transition-colors duration-300 ${
+                  !isActive
+                    ? 'text-primary'
+                    : isSelected
+                      ? 'text-white'
+                      : 'text-textMuted group-hover:text-white'
+                }`}>{p.title}</h3>
+                <p className="text-sm text-textMuted mt-2 leading-relaxed text-break text-stable">{p.caption}</p>
+
+                <div className="flex gap-2 mt-4 flex-wrap">
+                  {p.skills_used?.slice(0, 3).map(skill => (
+                    <span key={skill.id} className="text-[10px] uppercase tracking-wider px-2 py-1 bg-black/50 rounded text-textMuted border border-white/5 text-break">
+                      {skill.name}
+                    </span>
+                  ))}
+                  {p.skills_used?.length > 3 && (
+                    <span className="text-[10px] px-2 py-1 bg-black/50 rounded text-textMuted border border-white/5">+{p.skills_used.length - 3}</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </button>
-        ))}
+            </motion.button>
+          );
+        })}
       </div>
 
       {/* Details View */}
-      <div className="flex-1 min-w-0 relative overflow-y-auto project-details-scrollbar pt-0 xl:pt-8 pb-8 xl:max-h-none xl:h-full project-details-visible">
+      <div className="project-content-stable relative overflow-y-auto project-details-scrollbar pt-0 xl:pt-8 pb-8 xl:max-h-none xl:h-full project-details-visible hover-stable">
         <AnimatePresence mode="wait">
           {activeProject && (
             <motion.div
@@ -186,8 +212,8 @@ export const Projects = ({ projects = [] }) => {
               animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
               exit={{ opacity: 0, x: -20, filter: 'blur(10px)' }}
               transition={{ duration: 0.4 }}
-              className="bg-surfaceHighlight/50 border border-white/10 rounded-xl overflow-visible p-1 flex flex-col w-full"
-              style={{ minWidth: '0', maxWidth: '100%' }}
+              className="bg-surfaceHighlight/50 border border-white/10 rounded-xl overflow-visible p-1 flex flex-col w-full max-w-full"
+              style={{ minWidth: '0' }}
             >
               {/* Image Area */}
               {activeProject.images && activeProject.images.length > 0 && (
@@ -231,13 +257,13 @@ export const Projects = ({ projects = [] }) => {
 
                 {/* Highlights — skim layer */}
                 {getHighlights(activeProject).length > 0 && (
-                  <div className="mb-6 border-l-2 border-primary bg-primary/5 rounded-r-lg p-4 xl:p-5">
+                  <div className="mb-6 border-l-2 border-primary bg-primary/5 rounded-r-lg p-4 xl:p-5 hover-stable shrink-0">
                     <div className="text-[11px] font-mono text-primary uppercase tracking-wider mb-3">Highlights</div>
                     <ul className="space-y-2">
                       {getHighlights(activeProject).map((h, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-white/90 leading-snug">
                           <span className="mt-1.5 w-1 h-1 bg-primary rounded-full shrink-0" />
-                          <span className="text-break">{h}</span>
+                          <span className="text-break text-stable text-justify flex-1 min-w-0">{h}</span>
                         </li>
                       ))}
                     </ul>
@@ -281,10 +307,10 @@ export const Projects = ({ projects = [] }) => {
                           const { intro, sections } = parseProjectSections(activeProject.description);
                           
                           return (
-                            <div className="prose prose-invert prose-enhanced text-textMuted leading-relaxed mb-6 xl:mb-8 w-full overflow-hidden">
+                            <div className="prose prose-invert prose-enhanced text-textMuted leading-relaxed mb-6 xl:mb-8 w-full overflow-hidden shrink-0">
                               {/* Intro section */}
                               {intro && (
-                                <div className="mb-6 text-sm xl:text-base text-break leading-relaxed">
+                                <div className="mb-6 text-sm xl:text-base text-break leading-relaxed text-justify">
                                   <div
                                     dangerouslySetInnerHTML={{ 
                                       __html: intro
@@ -305,7 +331,7 @@ export const Projects = ({ projects = [] }) => {
                                         {section.title}
                                       </h4>
                                       <div 
-                                        className="text-textMuted text-sm xl:text-base leading-relaxed text-break"
+                                        className="text-textMuted text-sm xl:text-base leading-relaxed text-break text-justify"
                                         dangerouslySetInnerHTML={{ 
                                           __html: section.content
                                             .replace(/\n\n/g, '<br/><br/>')
@@ -318,7 +344,7 @@ export const Projects = ({ projects = [] }) => {
                               ) : (
                                 // Fallback for projects without structured sections
                                 intro ? null : (
-                                  <div className="text-sm xl:text-base text-break leading-relaxed">
+                                  <div className="text-sm xl:text-base text-break leading-relaxed text-justify">
                                     <div
                                       dangerouslySetInnerHTML={{ 
                                         __html: activeProject.description

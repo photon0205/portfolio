@@ -50,10 +50,9 @@ export const About = ({ about, projectCount = 0, experienceCount = 0 }) => {
   return (
     <div className="flex flex-col lg:flex-row gap-12 h-full overflow-y-auto custom-scrollbar pb-10 min-w-0">
       {/* Bio */}
-      <div className="flex-1 min-w-[300px] space-y-8" style={{ width: '100%' }}>
+      <div className="w-full lg:w-[500px] xl:w-[600px] shrink-0 space-y-8">
         <div 
-            className="prose prose-invert prose-lg text-textMuted leading-relaxed [&>p]:mb-4 [&>p>span]:text-white/90"
-            style={{ width: '100%', minWidth: '280px' }}
+            className="prose prose-invert prose-lg text-textMuted leading-relaxed [&>p]:mb-4 [&>p]:text-justify [&>p]:shrink-0 [&>p>span]:text-white/90"
             dangerouslySetInnerHTML={{ __html: about.summary }} 
         />
 

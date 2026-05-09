@@ -68,7 +68,7 @@ function App() {
       id: 'work', 
       title: 'PROJECTS', 
       subtitle: 'PORTFOLIO', 
-      component: <Projects projects={portfolioData?.projects} />, 
+      component: <Projects projects={portfolioData?.projects} isActive={activeSection === 'work'} />, 
       bg: <ProjectsBackground />,
       disableParentScroll: true
     },
@@ -129,7 +129,7 @@ function App() {
       </div>
       
       {/* Main Flex Container - The "Deck" */}
-      <div className="h-full w-full flex flex-col md:flex-row relative z-10 pt-16 md:pt-0">
+      <div className="h-full w-full flex flex-col md:flex-row relative z-10 pt-16 md:pt-0 section-layout-stable">
         {sections.map((section, index) => (
           <Slice
             key={section.id}

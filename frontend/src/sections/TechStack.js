@@ -18,7 +18,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
   return (
     <div className="flex flex-col lg:flex-row h-full gap-8 min-w-0">
       {/* Experience Timeline */}
-      <div className="flex-1 min-w-[320px] overflow-y-auto custom-scrollbar pr-4">
+      <div className="w-full lg:w-[500px] xl:w-[600px] shrink-0 overflow-y-auto custom-scrollbar pr-4">
         <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-2 sticky top-0 bg-background/95 backdrop-blur py-2 z-10 border-b border-white/10">
           <Briefcase className="text-primary" /> PROFESSIONAL TRAJECTORY
         </h3>
@@ -46,12 +46,12 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
                 <span className="text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.company}</span> • <span className="text-break">{exp.location}</span>
               </div>
               
-              <ul className="space-y-3 mb-4" style={{ width: '100%', minWidth: '350px' }}>
+              <ul className="space-y-3 mb-4 w-full max-w-full">
                 {exp.description?.map((item) => (
                   <li key={item.id} className="text-sm text-textMuted leading-relaxed flex items-start gap-3" style={{ width: '100%' }}>
                     <span className="text-primary mt-2 w-1 h-1 bg-primary rounded-full block shrink-0"></span>
                     <div 
-                      className="text-break"
+                      className="text-break text-justify"
                       style={{ 
                         width: 'calc(100% - 16px)',
                         lineHeight: '1.5'
