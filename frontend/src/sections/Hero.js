@@ -6,7 +6,7 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
   if (!about) return <HeroSkeleton />;
 
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-4xl min-w-[320px] w-full">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

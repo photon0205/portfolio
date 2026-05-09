@@ -16,9 +16,9 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row h-full gap-8">
+    <div className="flex flex-col lg:flex-row h-full gap-8 min-w-0">
       {/* Experience Timeline */}
-      <div className="w-full lg:w-3/5 overflow-y-auto custom-scrollbar pr-4">
+      <div className="flex-1 min-w-[300px] overflow-y-auto custom-scrollbar pr-4">
         <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-2 sticky top-0 bg-background/95 backdrop-blur py-2 z-10 border-b border-white/10">
           <Briefcase className="text-primary" /> PROFESSIONAL TRAJECTORY
         </h3>
@@ -46,11 +46,11 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
                 <span className="text-white">{exp.company}</span> • {exp.location}
               </div>
               
-              <ul className="space-y-2 mb-4">
+              <ul className="space-y-2 mb-4" style={{ width: '100%', minWidth: '320px' }}>
                 {exp.description?.map((item) => (
-                  <li key={item.id} className="text-sm text-textMuted leading-relaxed flex items-start gap-2">
+                  <li key={item.id} className="text-sm text-textMuted leading-relaxed flex items-start gap-2" style={{ width: '100%' }}>
                     <span className="text-primary mt-1.5 w-1 h-1 bg-primary rounded-full block shrink-0"></span>
-                    {item.point}
+                    <span style={{ width: 'calc(100% - 12px)' }}>{item.point}</span>
                   </li>
                 ))}
               </ul>
@@ -68,7 +68,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
       </div>
 
       {/* Open Source Side Panel */}
-      <div className="w-full lg:w-2/5 flex flex-col gap-8 overflow-y-auto custom-scrollbar">
+      <div className="lg:w-[320px] lg:min-w-[280px] lg:max-w-[360px] flex flex-col gap-8 overflow-y-auto custom-scrollbar shrink-0">
         
         {/* Open Source Block */}
         {opensource && opensource.length > 0 && (

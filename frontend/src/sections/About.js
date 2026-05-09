@@ -48,11 +48,12 @@ export const About = ({ about, projectCount = 0, experienceCount = 0 }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 h-full overflow-y-auto custom-scrollbar pb-10">
+    <div className="flex flex-col lg:flex-row gap-12 h-full overflow-y-auto custom-scrollbar pb-10 min-w-0">
       {/* Bio */}
-      <div className="space-y-8">
+      <div className="flex-1 min-w-[300px] space-y-8" style={{ width: '100%' }}>
         <div 
             className="prose prose-invert prose-lg text-textMuted leading-relaxed [&>p]:mb-4 [&>p>span]:text-white/90"
+            style={{ width: '100%', minWidth: '280px' }}
             dangerouslySetInnerHTML={{ __html: about.summary }} 
         />
 
@@ -70,7 +71,7 @@ export const About = ({ about, projectCount = 0, experienceCount = 0 }) => {
       </div>
 
       {/* Contact Form & Socials */}
-      <div className="flex flex-col gap-6">
+      <div className="lg:w-[360px] lg:min-w-[320px] lg:max-w-[400px] flex flex-col gap-6 shrink-0">
         <div className="bg-surfaceHighlight/20 border border-white/10 p-8 rounded-xl backdrop-blur-md">
             <h3 className="text-2xl font-bold text-white mb-6">Initialize Connection</h3>
             
