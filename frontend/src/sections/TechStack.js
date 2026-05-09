@@ -18,7 +18,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
   return (
     <div className="flex flex-col lg:flex-row h-full gap-8 min-w-0">
       {/* Experience Timeline */}
-      <div className="flex-1 min-w-[300px] overflow-y-auto custom-scrollbar pr-4">
+      <div className="flex-1 min-w-[320px] overflow-y-auto custom-scrollbar pr-4">
         <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-2 sticky top-0 bg-background/95 backdrop-blur py-2 z-10 border-b border-white/10">
           <Briefcase className="text-primary" /> PROFESSIONAL TRAJECTORY
         </h3>
@@ -41,16 +41,25 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
                 </span>
               </div>
               
-              <h4 className="text-xl font-bold text-white">{exp.title}</h4>
-              <div className="text-sm font-mono text-textMuted mb-4 flex items-center gap-2">
-                <span className="text-white">{exp.company}</span> • {exp.location}
+              <h4 className="text-xl font-bold text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.title}</h4>
+              <div className="text-sm font-mono text-textMuted mb-4 flex items-center gap-2 flex-wrap">
+                <span className="text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.company}</span> • <span className="text-break">{exp.location}</span>
               </div>
               
-              <ul className="space-y-2 mb-4" style={{ width: '100%', minWidth: '320px' }}>
+              <ul className="space-y-3 mb-4" style={{ width: '100%', minWidth: '350px' }}>
                 {exp.description?.map((item) => (
-                  <li key={item.id} className="text-sm text-textMuted leading-relaxed flex items-start gap-2" style={{ width: '100%' }}>
-                    <span className="text-primary mt-1.5 w-1 h-1 bg-primary rounded-full block shrink-0"></span>
-                    <span style={{ width: 'calc(100% - 12px)' }}>{item.point}</span>
+                  <li key={item.id} className="text-sm text-textMuted leading-relaxed flex items-start gap-3" style={{ width: '100%' }}>
+                    <span className="text-primary mt-2 w-1 h-1 bg-primary rounded-full block shrink-0"></span>
+                    <div 
+                      className="text-break"
+                      style={{ 
+                        width: 'calc(100% - 16px)',
+                        lineHeight: '1.5'
+                      }}
+                      dangerouslySetInnerHTML={{ 
+                        __html: item.point?.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') 
+                      }}
+                    />
                   </li>
                 ))}
               </ul>
@@ -86,7 +95,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
                       </h5>
                       <ExternalLinkIcon />
                     </div>
-                    <p className="text-xs text-textMuted mb-3">{os.caption}</p>
+                    <p className="text-xs text-textMuted mb-3 leading-relaxed text-break">{os.caption}</p>
                     <div className="space-y-2">
                       {os.contributions?.map(c => (
                           <a 

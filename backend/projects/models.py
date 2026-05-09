@@ -22,6 +22,7 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     caption = models.CharField(max_length=500)
     description = models.TextField()
+    highlights = models.JSONField(default=list, blank=True, help_text="3-5 short skim bullets")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     organisation = models.CharField(max_length=200, blank=True)
     skills_used = models.ManyToManyField(CodingSkill, blank=True)

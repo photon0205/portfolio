@@ -2,22 +2,33 @@ import React, { useState, useCallback } from 'react';
 import { previewDiff, applyDiff } from '../services/syncService';
 
 // Simple inline diff utility
-function createTextDiff(oldText, newText) {
-  if (!oldText && !newText) return null;
-  if (!oldText) return { type: 'added', text: newText };
-  if (!newText) return { type: 'removed', text: oldText };
-  if (oldText === newText) return null;
+function createTextDiff(oldValue, newValue) {
+  // Handle null/undefined cases
+  if (!oldValue && !newValue) return null;
+  if (!oldValue) return { type: 'added', value: newValue };
+  if (!newValue) return { type: 'removed', value: oldValue };
   
-  // Simple word-level diff
-  const oldWords = oldText.split(/\s+/);
-  const newWords = newText.split(/\s+/);
-  
-  if (oldWords.length <= 10 && newWords.length <= 10) {
-    return { type: 'changed', oldText, newText };
+  // Handle arrays (like highlights)
+  if (Array.isArray(oldValue) || Array.isArray(newValue)) {
+    if (JSON.stringify(oldValue) === JSON.stringify(newValue)) return null;
+    return { type: 'changed', oldValue, newValue };
   }
   
-  // For long text, just show old -> new
-  return { type: 'changed', oldText: oldText.substring(0, 100) + '...', newText: newText.substring(0, 100) + '...' };
+  // Handle text
+  if (oldValue === newValue) return null;
+  
+  // Simple word-level diff for text
+  const oldWords = String(oldValue).split(/\s+/);
+  const newWords = String(newValue).split(/\s+/);
+  
+  if (oldWords.length <= 10 && newWords.length <= 10) {
+    return { type: 'changed', oldValue, newValue };
+  }
+  
+  // For long text, truncate
+  const oldText = String(oldValue);
+  const newText = String(newValue);
+  return { type: 'changed', oldValue: oldText.length > 100 ? oldText.substring(0, 100) + '...' : oldText, newValue: newText.length > 100 ? newText.substring(0, 100) + '...' : newText };
 }
 
 function DiffValue({ oldValue, newValue }) {
@@ -25,18 +36,52 @@ function DiffValue({ oldValue, newValue }) {
   
   if (!diff) return <span className="text-gray-400">No change</span>;
   
+  const formatValue = (value) => {
+    if (Array.isArray(value)) {
+      if (value.length === 0) return '[]';
+      return (
+        <div className="ml-2">
+          <div>[</div>
+          {value.map((item, index) => (
+            <div key={index} className="ml-4">
+              "{item}"{index < value.length - 1 ? ',' : ''}
+            </div>
+          ))}
+          <div>]</div>
+        </div>
+      );
+    }
+    return String(value);
+  };
+  
   if (diff.type === 'added') {
-    return <span className="text-green-400 font-mono text-sm">+ {diff.text}</span>;
+    return (
+      <div className="text-green-400 font-mono text-sm">
+        <span>+ </span>
+        {formatValue(diff.value)}
+      </div>
+    );
   }
   
   if (diff.type === 'removed') {
-    return <span className="text-red-400 font-mono text-sm">- {diff.text}</span>;
+    return (
+      <div className="text-red-400 font-mono text-sm">
+        <span>- </span>
+        {formatValue(diff.value)}
+      </div>
+    );
   }
   
   return (
     <div className="font-mono text-sm">
-      <div className="text-red-400">- {diff.oldText}</div>
-      <div className="text-green-400">+ {diff.newText}</div>
+      <div className="text-red-400">
+        <span>- </span>
+        {formatValue(diff.oldValue)}
+      </div>
+      <div className="text-green-400">
+        <span>+ </span>
+        {formatValue(diff.newValue)}
+      </div>
     </div>
   );
 }

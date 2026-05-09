@@ -584,7 +584,7 @@ def _compare_project_fields(db_project, json_project):
     changes = {}
     
     fields_to_compare = [
-        'title', 'caption', 'description', 'organisation', 
+        'title', 'caption', 'description', 'highlights', 'organisation', 
         'github_link', 'live_demo_link', 'display_order'
     ]
     
@@ -1254,6 +1254,7 @@ def _apply_projects(payload, category_mapping, skill_mapping):
             match.title = json_project.get('title', match.title)
             match.caption = json_project.get('caption', match.caption)
             match.description = json_project.get('description', match.description)
+            match.highlights = json_project.get('highlights', match.highlights)
             match.organisation = json_project.get('organisation', match.organisation)
             match.github_link = json_project.get('github_link', match.github_link)
             match.live_demo_link = json_project.get('live_demo_link', match.live_demo_link)
@@ -1274,6 +1275,7 @@ def _apply_projects(payload, category_mapping, skill_mapping):
                 title=json_project.get('title', ''),
                 caption=json_project.get('caption', ''),
                 description=json_project.get('description', ''),
+                highlights=json_project.get('highlights', []),
                 category=category,
                 organisation=json_project.get('organisation', ''),
                 github_link=json_project.get('github_link', ''),

@@ -106,3 +106,132 @@ html {
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Text utilities for better formatting */
+.text-break {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced prose styles for longer content */
+.prose-enhanced {
+  max-width: none;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.prose-enhanced p {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.prose-enhanced strong {
+  color: white;
+  font-weight: 600;
+}
+
+/* Responsive container improvements */
+@media (max-width: 1279px) {
+  .project-container {
+    flex-direction: column !important;
+  }
+  
+  .project-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    max-height: 40vh !important;
+  }
+  
+  .project-details {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+/* Mobile-first responsive improvements */
+@media (max-width: 768px) {
+  .project-sidebar {
+    max-height: 35vh !important;
+  }
+  
+  .project-details {
+    padding-top: 1rem !important;
+  }
+}
+
+/* Projects section specific styles */
+.projects-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+}
+
+@media (min-width: 1280px) {
+  .projects-container {
+    flex-direction: row;
+    min-height: 600px;
+  }
+}
+
+/* Ensure project details are visible */
+.project-details-visible {
+  min-height: 300px;
+}
+
+@media (min-width: 1280px) {
+  .project-details-visible {
+    min-height: 500px;
+  }
+}
+
+/* Hide scrollbar for mobile tabs */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.scrollbar-hide::-webkit-scrollbar-track {
+  display: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+/* Ensure text doesn't overflow containers */
+.text-container {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Force word break for very long words */
+.force-break {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
