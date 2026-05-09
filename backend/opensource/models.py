@@ -1,15 +1,15 @@
 from django.db import models
 
 class ContributionType(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
 
     def __str__(self):
         return self.name
 
 class OpenSourceProject(models.Model):
-    name = models.CharField(max_length=100)
-    caption = models.CharField(max_length=150, default="Open Source Project")
+    name = models.CharField(max_length=200)
+    caption = models.CharField(max_length=500, default="Open Source Project")
     image = models.ImageField(upload_to="open_source_project_images/", blank=True)
     repo_link = models.URLField()
 

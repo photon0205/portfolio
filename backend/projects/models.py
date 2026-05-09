@@ -1,15 +1,15 @@
 from django.db import models
 
 class CodingSkill(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     logo = models.ImageField(upload_to="coding_skill_logos/", blank=True)
 
     def __str__(self):
         return self.name
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
 
     def __str__(self):
         return self.name
@@ -19,11 +19,11 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
 
 class Project(models.Model):
-    title = models.CharField(max_length=100)
-    caption = models.CharField(max_length=150)
+    title = models.CharField(max_length=200)
+    caption = models.CharField(max_length=500)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    organisation = models.CharField(max_length=100, blank=True)
+    organisation = models.CharField(max_length=200, blank=True)
     skills_used = models.ManyToManyField(CodingSkill, blank=True)
     github_link = models.URLField(blank=True)
     live_demo_link = models.URLField(blank=True)

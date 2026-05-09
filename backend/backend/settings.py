@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "opensource",
     "testimonials",
     "about",
+    "sync",
 ]
 
 CORS_ORIGIN_ALLOW_ALL = False

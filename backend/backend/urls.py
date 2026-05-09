@@ -10,6 +10,7 @@ urlpatterns = [
     path("api/opensource/", include("opensource.urls")),
     path("api/testimonials/", include("testimonials.urls")),
     path("api/about/", include("about.urls")),
+    path("api/sync/", include("sync.urls")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
