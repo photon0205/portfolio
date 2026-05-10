@@ -4,18 +4,23 @@ import { motion } from 'framer-motion';
 export const CustomCursor = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
+  const [isTouch] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(hover: none) and (pointer: coarse)').matches
+  );
 
   useEffect(() => {
+    if (isTouch) return;
+
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
-      
-      const target = e.target;
-      setIsPointer(window.getComputedStyle(target).cursor === 'pointer');
+      setIsPointer(window.getComputedStyle(e.target).cursor === 'pointer');
     };
 
     window.addEventListener('mousemove', updateMousePosition);
     return () => window.removeEventListener('mousemove', updateMousePosition);
-  }, []);
+  }, [isTouch]);
+
+  if (isTouch) return null;
 
   return (
     <>
@@ -36,11 +41,10 @@ export const CustomCursor = () => {
           x: mousePosition.x - 24,
           y: mousePosition.y - 24,
           scale: isPointer ? 0.5 : 1,
-          opacity: isPointer ? 0.5 : 1
+          opacity: isPointer ? 0.5 : 1,
         }}
         transition={{ type: 'spring', stiffness: 250, damping: 20, mass: 0.5 }}
       />
     </>
   );
 };
-

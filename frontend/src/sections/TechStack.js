@@ -2,13 +2,53 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, GitPullRequest, Terminal } from 'lucide-react';
 
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+const ordinal = (d) => {
+  if (d >= 11 && d <= 13) return `${d}th`;
+  switch (d % 10) {
+    case 1: return `${d}st`;
+    case 2: return `${d}nd`;
+    case 3: return `${d}rd`;
+    default: return `${d}th`;
+  }
+};
+
+const parseLocal = (dateStr) => {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d);
+};
+
+const fmtDateObj = (d) => `${ordinal(d.getDate())} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+
+const fmtDate = (dateStr) => {
+  if (!dateStr) return 'Present';
+  return fmtDateObj(parseLocal(dateStr));
+};
+
 export const TechStack = ({ experiences = [], opensource = [] }) => {
-  // Sort experiences by start_date (most recent first)
-  const sortedExperiences = useMemo(() => {
+  const groupedExperiences = useMemo(() => {
     if (!experiences || experiences.length === 0) return [];
-    return [...experiences].sort((a, b) => 
-      new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
-    );
+
+    const groups = [];
+    [...experiences].forEach(exp => {
+      const existing = groups.find(g => g.company === exp.company);
+      const expStart = parseLocal(exp.start_date);
+      const expEnd = exp.end_date ? parseLocal(exp.end_date) : null;
+      if (existing) {
+        existing.roles.push(exp);
+        if (expStart > existing.latestStart) existing.latestStart = expStart;
+        if (expStart < existing.earliestStart) existing.earliestStart = expStart;
+        if (expEnd === null) existing.latestEnd = null;
+        else if (existing.latestEnd !== null && expEnd > existing.latestEnd) existing.latestEnd = expEnd;
+      } else {
+        groups.push({ company: exp.company, website: exp.website, roles: [exp], latestStart: expStart, earliestStart: expStart, latestEnd: expEnd });
+      }
+    });
+
+    groups.sort((a, b) => b.latestStart - a.latestStart);
+    groups.forEach(g => g.roles.sort((a, b) => parseLocal(b.start_date) - parseLocal(a.start_date)));
+    return groups;
   }, [experiences]);
 
   if ((!experiences || experiences.length === 0) && (!opensource || opensource.length === 0)) {
@@ -24,50 +64,96 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
         </h3>
 
         <div className="space-y-8 md:space-y-12 relative border-l border-white/10 ml-3 pl-6 md:pl-8">
-          {sortedExperiences.map((exp, index) => (
+          {groupedExperiences.map((group, groupIndex) => (
             <motion.div
-              key={exp.id}
+              key={group.company}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: groupIndex * 0.1 }}
               className="relative"
             >
               {/* Timeline Dot */}
               <div className="absolute -left-[31px] md:-left-[39px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full border-4 border-background bg-primary" />
 
+              {/* Company date span */}
               <div className="mb-2">
                 <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded">
-                   {exp.start_date} — {exp.end_date || 'PRESENT'}
+                  {fmtDateObj(group.earliestStart)} — {group.latestEnd ? fmtDateObj(group.latestEnd) : 'Present'}
                 </span>
               </div>
 
-              <h4 className="text-base md:text-xl font-bold text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.title}</h4>
-              <div className="text-xs md:text-sm font-mono text-textMuted mb-3 md:mb-4 flex items-center gap-2 flex-wrap">
-                <span className="text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.company}</span> • <span className="text-break">{exp.location}</span>
-              </div>
+              {/* Company name */}
+              <h4 className="text-base md:text-xl font-bold text-white mb-3 md:mb-4" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                <a href={group.website} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  {group.company}
+                </a>
+              </h4>
 
-              <ul className="space-y-2 md:space-y-3 mb-3 md:mb-4 w-full max-w-full">
-                {exp.description?.map((item) => (
-                  <li key={item.id} className="text-xs md:text-sm text-textMuted leading-relaxed flex items-start gap-2 md:gap-3" style={{ width: '100%' }}>
-                    <span className="mt-2 w-1 h-1 bg-primary rounded-full block shrink-0"></span>
-                    <div
-                      className="text-break text-justify"
-                      style={{ lineHeight: '1.5' }}
-                      dangerouslySetInnerHTML={{
-                        __html: item.point?.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
+              {group.roles.length > 1 ? (
+                /* Multi-role: stacked with dividers, no inner dots/lines */
+                <div>
+                  {group.roles.map((role, roleIdx) => (
+                    <div key={role.id} className={roleIdx > 0 ? 'border-t border-white/10 pt-5 mt-5' : ''}>
+                      <div className="flex items-start justify-between gap-3 mb-1 flex-wrap">
+                        <h5 className="text-sm md:text-base font-bold text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{role.title}</h5>
+                        <span className="text-[10px] font-mono text-primary/80 bg-primary/10 px-2 py-0.5 rounded shrink-0">
+                          {fmtDate(role.start_date)} — {role.end_date ? fmtDate(role.end_date) : 'Present'}
+                        </span>
+                      </div>
+                      <div className="text-xs font-mono text-textMuted mb-2 md:mb-3">{role.location}</div>
 
-              <div className="flex flex-wrap gap-1.5 md:gap-2">
-                 {exp.skills_used?.map(skill => (
-                    <span key={skill.id} className="text-[10px] px-2 py-0.5 border border-white/5 bg-white/5 rounded text-gray-400">
+                      <ul className="space-y-2 md:space-y-3 mb-3 w-full max-w-full">
+                        {role.description?.map(item => (
+                          <li key={item.id} className="text-xs md:text-sm text-textMuted leading-relaxed flex items-start gap-2 md:gap-3" style={{ width: '100%' }}>
+                            <span className="mt-2 w-1 h-1 bg-primary rounded-full block shrink-0" />
+                            <div
+                              className="text-break text-justify"
+                              style={{ lineHeight: '1.5' }}
+                              dangerouslySetInnerHTML={{ __html: item.point?.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="flex flex-wrap gap-1.5 md:gap-2">
+                        {role.skills_used?.map(skill => (
+                          <span key={skill.id} className="text-[10px] px-2 py-0.5 border border-white/5 bg-white/5 rounded text-gray-400">
+                            {skill.name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                /* Single role: flat render */
+                <div>
+                  <div className="text-xs md:text-sm font-mono text-textMuted mb-3 md:mb-4 flex items-center gap-2 flex-wrap">
+                    <span className="text-white/80 text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{group.roles[0].title}</span> • <span className="text-break">{group.roles[0].location}</span>
+                  </div>
+
+                  <ul className="space-y-2 md:space-y-3 mb-3 md:mb-4 w-full max-w-full">
+                    {group.roles[0].description?.map(item => (
+                      <li key={item.id} className="text-xs md:text-sm text-textMuted leading-relaxed flex items-start gap-2 md:gap-3" style={{ width: '100%' }}>
+                        <span className="mt-2 w-1 h-1 bg-primary rounded-full block shrink-0" />
+                        <div
+                          className="text-break text-justify"
+                          style={{ lineHeight: '1.5' }}
+                          dangerouslySetInnerHTML={{ __html: item.point?.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex flex-wrap gap-1.5 md:gap-2">
+                    {group.roles[0].skills_used?.map(skill => (
+                      <span key={skill.id} className="text-[10px] px-2 py-0.5 border border-white/5 bg-white/5 rounded text-gray-400">
                         {skill.name}
-                    </span>
-                 ))}
-              </div>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
