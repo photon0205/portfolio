@@ -16,16 +16,16 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row h-full gap-8 min-w-0">
+    <div className="flex flex-col lg:flex-row gap-8 min-w-0">
       {/* Experience Timeline */}
-      <div className="w-full lg:w-[500px] xl:w-[600px] shrink-0 overflow-y-auto custom-scrollbar pr-4">
-        <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-2 sticky top-0 bg-background/95 backdrop-blur py-2 z-10 border-b border-white/10">
-          <Briefcase className="text-primary" /> PROFESSIONAL TRAJECTORY
+      <div className="w-full lg:w-[500px] xl:w-[600px] shrink-0">
+        <h3 className="text-base md:text-xl font-bold text-white mb-6 md:mb-8 flex items-center gap-2 border-b border-white/10 pb-3">
+          <Briefcase className="text-primary w-4 h-4 md:w-5 md:h-5 shrink-0" /> PROFESSIONAL TRAJECTORY
         </h3>
-        
-        <div className="space-y-12 relative border-l border-white/10 ml-3 pl-8">
+
+        <div className="space-y-8 md:space-y-12 relative border-l border-white/10 ml-3 pl-6 md:pl-8">
           {sortedExperiences.map((exp, index) => (
-            <motion.div 
+            <motion.div
               key={exp.id}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -33,38 +33,35 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
               className="relative"
             >
               {/* Timeline Dot */}
-              <div className="absolute -left-[39px] top-1 w-5 h-5 rounded-full border-4 border-background bg-primary" />
-              
+              <div className="absolute -left-[31px] md:-left-[39px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full border-4 border-background bg-primary" />
+
               <div className="mb-2">
                 <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded">
                    {exp.start_date} — {exp.end_date || 'PRESENT'}
                 </span>
               </div>
-              
-              <h4 className="text-xl font-bold text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.title}</h4>
-              <div className="text-sm font-mono text-textMuted mb-4 flex items-center gap-2 flex-wrap">
+
+              <h4 className="text-base md:text-xl font-bold text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.title}</h4>
+              <div className="text-xs md:text-sm font-mono text-textMuted mb-3 md:mb-4 flex items-center gap-2 flex-wrap">
                 <span className="text-white text-break" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>{exp.company}</span> • <span className="text-break">{exp.location}</span>
               </div>
-              
-              <ul className="space-y-3 mb-4 w-full max-w-full">
+
+              <ul className="space-y-2 md:space-y-3 mb-3 md:mb-4 w-full max-w-full">
                 {exp.description?.map((item) => (
-                  <li key={item.id} className="text-sm text-textMuted leading-relaxed flex items-start gap-3" style={{ width: '100%' }}>
-                    <span className="text-primary mt-2 w-1 h-1 bg-primary rounded-full block shrink-0"></span>
-                    <div 
+                  <li key={item.id} className="text-xs md:text-sm text-textMuted leading-relaxed flex items-start gap-2 md:gap-3" style={{ width: '100%' }}>
+                    <span className="mt-2 w-1 h-1 bg-primary rounded-full block shrink-0"></span>
+                    <div
                       className="text-break text-justify"
-                      style={{ 
-                        width: 'calc(100% - 16px)',
-                        lineHeight: '1.5'
-                      }}
-                      dangerouslySetInnerHTML={{ 
-                        __html: item.point?.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') 
+                      style={{ lineHeight: '1.5' }}
+                      dangerouslySetInnerHTML={{
+                        __html: item.point?.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
                       }}
                     />
                   </li>
                 ))}
               </ul>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 md:gap-2">
                  {exp.skills_used?.map(skill => (
                     <span key={skill.id} className="text-[10px] px-2 py-0.5 border border-white/5 bg-white/5 rounded text-gray-400">
                         {skill.name}
@@ -77,7 +74,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
       </div>
 
       {/* Open Source Side Panel */}
-      <div className="lg:w-[320px] lg:min-w-[280px] lg:max-w-[360px] flex flex-col gap-8 overflow-y-auto custom-scrollbar shrink-0">
+      <div className="w-full lg:w-[320px] lg:min-w-[280px] lg:max-w-[360px] flex flex-col gap-8 shrink-0">
         
         {/* Open Source Block */}
         {opensource && opensource.length > 0 && (

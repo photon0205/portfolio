@@ -6,6 +6,7 @@ import { Projects, ProjectsBackground } from './sections/Projects';
 import { TechStack, TechBackground } from './sections/TechStack';
 import { About, AboutBackground } from './sections/About';
 import { Github, Twitter, Linkedin } from 'lucide-react';
+import { MobileNav } from './components/nexus/MobileNav';
 import { fetchPortfolioData } from './services/portfolioService';
 import logoImage from './assets/logo.png';
 import './index.css';
@@ -129,7 +130,7 @@ function App() {
       </div>
       
       {/* Main Flex Container - The "Deck" */}
-      <div className="h-full w-full flex flex-col md:flex-row relative z-10 pt-16 md:pt-0 section-layout-stable">
+      <div className="h-full w-full flex flex-col md:flex-row relative z-10 pt-16 md:pt-0 pb-16 md:pb-0 section-layout-stable">
         {sections.map((section, index) => (
           <Slice
             key={section.id}
@@ -151,10 +152,11 @@ function App() {
       </div>
       
       {/* Footer / Copyright - Only visible if hero is active */}
-      <div className={`fixed bottom-4 left-12 text-[10px] font-mono text-white/30 transition-opacity duration-500 z-50 pointer-events-none ${activeSection === 'hero' ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`hidden md:block fixed bottom-4 left-12 text-[10px] font-mono text-white/30 transition-opacity duration-500 z-50 pointer-events-none ${activeSection === 'hero' ? 'opacity-100' : 'opacity-0'}`}>
         SYSTEM STATUS: {loading ? 'LOADING...' : 'ONLINE'} <br/>
         © 2025 {portfolioData?.about?.name?.toUpperCase() || 'SAHAJPREET SINGH'}
       </div>
+      <MobileNav activeSection={activeSection} onActivate={setActiveSection} />
     </div>
   );
 }

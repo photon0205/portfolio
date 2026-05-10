@@ -31,12 +31,15 @@ export const Slice = ({
       className={`
         relative h-full flex flex-col border-r border-white/5 overflow-hidden
         transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
-        ${isActive ? 'flex-[12]' : 'flex-[1] hover:flex-[2] cursor-pointer'}
+        ${isActive
+          ? 'flex-1 md:flex-[12]'
+          : 'hidden md:flex md:flex-[1] md:hover:flex-[2] cursor-pointer'}
         bg-background/80 backdrop-blur-sm group
       `}
       {...props}
     >
-      {/* Inactive State Visuals (Vertical Label) */}
+      {/* Inactive State Visuals (Vertical Label) — desktop only */}
+      <div className="hidden md:block">
       <AnimatePresence>
         {!isActive && (
           <motion.div 
@@ -67,6 +70,7 @@ export const Slice = ({
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
 
       {/* Active State Content */}
       <div className={`relative w-full h-full ${isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none absolute inset-0'}`}>
@@ -75,19 +79,19 @@ export const Slice = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className={`w-full h-full overflow-x-hidden ${disableParentScroll ? 'overflow-hidden' : 'overflow-y-auto custom-scrollbar'}`}
+            className={`w-full h-full overflow-x-hidden flex flex-col ${disableParentScroll ? 'overflow-hidden' : 'overflow-y-auto custom-scrollbar'}`}
           >
              {/* Sticky Header inside the slice */}
-            <div className="sticky top-0 z-20 bg-background/90 backdrop-blur-md border-b border-white/10" style={{ paddingTop: '1.5rem', paddingBottom: '1rem' }}>
-              <div className="flex items-center" style={{ paddingLeft: id === 'hero' ? 'calc(2rem + 1.75rem + 1rem)' : '2rem' }}>
+            <div className="sticky top-0 z-20 bg-background/90 backdrop-blur-md border-b border-white/10 shrink-0" style={{ paddingTop: '1.5rem', paddingBottom: '1rem' }}>
+              <div className={`flex items-center pl-8 ${id === 'hero' ? 'md:pl-[calc(2rem+1.75rem+1rem)]' : ''}`}>
                 <h2 className="text-3xl md:text-4xl font-sans font-bold text-white tracking-tighter leading-[1.75rem] whitespace-nowrap" style={{ display: 'flex', alignItems: 'center', height: '1.75rem' }}>
                   {title}
                 </h2>
               </div>
             </div>
-            
+
             {disableParentScroll ? (
-              <div className="h-full flex flex-col">
+              <div className="flex-1 flex flex-col min-h-0">
                 {children}
               </div>
             ) : (

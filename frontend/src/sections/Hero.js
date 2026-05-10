@@ -79,20 +79,20 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Profile header — name/role/bio left, circular flip right */}
-        <div className="flex items-start gap-8 mb-10">
-          <div className="min-w-0 max-w-[680px]">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-3 tracking-tighter leading-tight">
+        {/* Profile header — stacked on mobile (photo top, text below), row on desktop */}
+        <div className="flex flex-col-reverse md:flex-row md:items-start gap-6 md:gap-8 mb-8 md:mb-10">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-3xl md:text-6xl font-bold text-white mb-2 md:mb-3 tracking-tighter leading-tight">
               {about.name}
             </h1>
-            <p className="text-xl md:text-2xl text-primary font-mono mb-6">
+            <p className="text-base md:text-2xl text-primary font-mono mb-4 md:mb-6">
               {about.current_role}
             </p>
-            <p className="text-lg md:text-xl text-textMuted font-light leading-relaxed border-l-2 border-primary/50 pl-6">
+            <p className="text-sm md:text-xl text-textMuted font-light leading-relaxed border-l-2 border-primary/50 pl-4 md:pl-6">
               {about.subtitle}
             </p>
           </div>
-          <div className="shrink-0 pt-1">
+          <div className="flex justify-center md:block shrink-0 md:pt-1">
             <ProfileFlip
               photo={getImageUrl(about.profile_picture)}
               avatar={getImageUrl(about.avatar)}
@@ -101,25 +101,25 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
         </div>
 
         {about.summary && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div className="border border-white/10 bg-white/5 p-5 rounded-lg backdrop-blur-sm hover:border-accent/50 transition-colors group">
-              <Cpu className="w-7 h-7 text-accent mb-3 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-bold text-white mb-2">Production AI Engineering</h3>
-              <p className="text-textMuted text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
+            <div className="border border-white/10 bg-white/5 p-4 md:p-5 rounded-lg backdrop-blur-sm hover:border-accent/50 transition-colors group">
+              <Cpu className="w-6 h-6 md:w-7 md:h-7 text-accent mb-2 md:mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-base md:text-lg font-bold text-white mb-1 md:mb-2">Production AI Engineering</h3>
+              <p className="text-textMuted text-xs md:text-sm">
                 I close the gap between LLM capability and enterprise reliability — fault-tolerant, observable, and multi-provider from day one.
               </p>
             </div>
-            <div className="border border-white/10 bg-white/5 p-5 rounded-lg backdrop-blur-sm hover:border-primary/50 transition-colors group">
-              <Terminal className="w-7 h-7 text-primary mb-3 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-bold text-white mb-2">Systems That Earn Trust</h3>
-              <p className="text-textMuted text-sm">
+            <div className="border border-white/10 bg-white/5 p-4 md:p-5 rounded-lg backdrop-blur-sm hover:border-primary/50 transition-colors group">
+              <Terminal className="w-6 h-6 md:w-7 md:h-7 text-primary mb-2 md:mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-base md:text-lg font-bold text-white mb-1 md:mb-2">Systems That Earn Trust</h3>
+              <p className="text-textMuted text-xs md:text-sm">
                 Async pipelines that don't silently fail, encrypted data flows, backends founders and operators can actually sleep on.
               </p>
             </div>
           </div>
         )}
 
-        <div className="flex flex-wrap gap-4 mb-10">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 md:mb-10">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -130,7 +130,7 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
                 window.dispatchEvent(new CustomEvent('activateSection', { detail: 'work' }));
               }
             }}
-            className="px-8 py-4 bg-primary text-white font-mono font-bold rounded-sm hover:bg-primaryGlow transition-all flex items-center gap-2 group cursor-pointer"
+            className="px-8 py-3 md:py-4 bg-primary text-white font-mono font-bold rounded-sm hover:bg-primaryGlow transition-all flex items-center justify-center gap-2 group cursor-pointer"
           >
             VIEW PROJECTS <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
@@ -139,7 +139,7 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
               href={about.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 border border-white/20 text-white font-mono rounded-sm hover:bg-white/5 transition-all flex items-center gap-2"
+              className="px-8 py-3 md:py-4 border border-white/20 text-white font-mono rounded-sm hover:bg-white/5 transition-all flex items-center justify-center gap-2"
             >
               RESUME <Download className="w-4 h-4" />
             </a>
@@ -147,7 +147,7 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
         </div>
 
         {/* Status Stream */}
-        <div className="mt-14 pt-6 border-t border-white/10 font-mono text-xs text-textMuted flex flex-col md:flex-row gap-6">
+        <div className="mt-8 md:mt-14 pt-5 md:pt-6 border-t border-white/10 font-mono text-xs text-textMuted flex flex-col md:flex-row gap-4 md:gap-6">
           <div className="flex items-center gap-4">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             <span>AVAILABLE FOR OPPORTUNITIES</span>

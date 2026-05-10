@@ -237,7 +237,7 @@ export const Projects = ({ projects = [], isActive = false }) => {
       </div>
 
       {/* Details View */}
-      <div className="project-content-stable relative overflow-y-auto project-details-scrollbar pt-0 xl:pt-8 pb-8 xl:max-h-none xl:h-full project-details-visible hover-stable">
+      <div className="project-content-stable relative overflow-y-auto project-details-scrollbar pt-0 xl:pt-8 pb-20 xl:pb-8 xl:max-h-none xl:h-full project-details-visible hover-stable">
         <AnimatePresence mode="wait">
           {activeProject && (
             <motion.div
@@ -276,7 +276,7 @@ export const Projects = ({ projects = [], isActive = false }) => {
                       {/* Prev button */}
                       <button
                         onClick={() => setCurrentImageIndex(i => (i - 1 + activeProject.images.length) % activeProject.images.length)}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors z-10 opacity-0 group-hover/carousel:opacity-100"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors z-10 opacity-70 xl:opacity-0 xl:group-hover/carousel:opacity-100"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -284,7 +284,7 @@ export const Projects = ({ projects = [], isActive = false }) => {
                       {/* Next button */}
                       <button
                         onClick={() => setCurrentImageIndex(i => (i + 1) % activeProject.images.length)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors z-10 opacity-0 group-hover/carousel:opacity-100"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors z-10 opacity-70 xl:opacity-0 xl:group-hover/carousel:opacity-100"
                       >
                         <ChevronRight className="w-4 h-4" />
                       </button>
