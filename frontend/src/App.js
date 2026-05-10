@@ -61,7 +61,7 @@ function App() {
       id: 'hero', 
       title: 'INTRODUCTION', 
       subtitle: 'PROFILE', 
-      component: <Hero about={portfolioData?.about} projectCount={portfolioData?.projects?.length} experiences={portfolioData?.experiences} onNavigateToProjects={handleNavigateToProjects} />, 
+      component: <Hero about={portfolioData?.about} projectCount={portfolioData?.projects?.length} experiences={portfolioData?.experiences} loading={loading} onNavigateToProjects={handleNavigateToProjects} />,
       bg: <HeroBackground /> 
     },
     { 
@@ -151,7 +151,7 @@ function App() {
       </div>
       
       {/* Footer / Copyright - Only visible if hero is active */}
-      <div className={`fixed bottom-4 left-8 text-[10px] font-mono text-white/30 transition-opacity duration-500 z-50 pointer-events-none ${activeSection === 'hero' ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`fixed bottom-4 left-12 text-[10px] font-mono text-white/30 transition-opacity duration-500 z-50 pointer-events-none ${activeSection === 'hero' ? 'opacity-100' : 'opacity-0'}`}>
         SYSTEM STATUS: {loading ? 'LOADING...' : 'ONLINE'} <br/>
         © 2025 {portfolioData?.about?.name?.toUpperCase() || 'SAHAJPREET SINGH'}
       </div>
