@@ -12,7 +12,7 @@ const ProfileFlip = ({ photo, avatar }) => {
 
   return (
     <div
-      className="relative shrink-0 w-[88px] h-[88px] md:w-[108px] md:h-[108px] cursor-pointer group/flip"
+      className="relative shrink-0 w-[148px] h-[148px] md:w-[168px] md:h-[168px] cursor-pointer group/flip"
       style={{ perspective: '800px' }}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
@@ -25,29 +25,10 @@ const ProfileFlip = ({ photo, avatar }) => {
         className="relative w-full h-full"
         style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Front — real photo */}
+        {/* Front — avatar (default) */}
         <div
-          className="absolute inset-0 rounded-2xl overflow-hidden border border-primary/40 shadow-lg shadow-primary/10"
+          className="absolute inset-0 rounded-full overflow-hidden border border-accent/50 shadow-lg shadow-accent/10"
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
-        >
-          {photo ? (
-            <img
-              src={photo}
-              alt="Profile photo"
-              className="w-full h-full object-cover"
-              onError={e => { e.target.style.display = 'none'; }}
-            />
-          ) : (
-            <div className="w-full h-full bg-primary/20 flex items-center justify-center text-primary text-3xl font-bold">S</div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent pointer-events-none" />
-          <span className="absolute bottom-1 left-0 right-0 text-center text-[8px] font-mono text-white/50 tracking-widest uppercase">photo</span>
-        </div>
-
-        {/* Back — avatar */}
-        <div
-          className="absolute inset-0 rounded-2xl overflow-hidden border border-accent/50 shadow-lg shadow-accent/10"
-          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
           {avatar ? (
             <img
@@ -59,16 +40,28 @@ const ProfileFlip = ({ photo, avatar }) => {
           ) : (
             <div className="w-full h-full bg-accent/20 flex items-center justify-center text-accent text-3xl font-bold">S</div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent pointer-events-none" />
-          <span className="absolute bottom-1 left-0 right-0 text-center text-[8px] font-mono text-white/50 tracking-widest uppercase">avatar</span>
+        </div>
+
+        {/* Back — real photo (on hover) */}
+        <div
+          className="absolute inset-0 rounded-full overflow-hidden border border-primary/40 shadow-lg shadow-primary/10"
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          {photo ? (
+            <img
+              src={photo}
+              alt="Profile photo"
+              className="w-full h-full object-cover"
+              onError={e => { e.target.style.display = 'none'; }}
+            />
+          ) : (
+            <div className="w-full h-full bg-primary/20 flex items-center justify-center text-primary text-3xl font-bold">S</div>
+          )}
         </div>
       </motion.div>
 
       {/* Animated ring hint on hover */}
-      <div className="absolute inset-0 rounded-2xl ring-1 ring-white/0 group-hover/flip:ring-white/25 transition-all duration-300 pointer-events-none" />
-      <div className="absolute -bottom-5 left-0 right-0 text-center text-[8px] font-mono text-white/25 opacity-0 group-hover/flip:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-        ← flip →
-      </div>
+      <div className="absolute inset-0 rounded-full ring-1 ring-white/0 group-hover/flip:ring-white/25 transition-all duration-300 pointer-events-none" />
     </div>
   );
 };
@@ -80,46 +73,47 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
   const location = currentExp?.location || experiences?.[0]?.location;
 
   return (
-    <div className="max-w-4xl min-w-[320px] w-full">
+    <div className="max-w-5xl min-w-[320px] w-full">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Profile header — flip card + name/role */}
-        <div className="flex items-center gap-5 mb-7">
-          <ProfileFlip
-            photo={getImageUrl(about.profile_picture)}
-            avatar={getImageUrl(about.avatar)}
-          />
-          <div className="min-w-0">
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter leading-tight">
+        {/* Profile header — name/role/bio left, circular flip right */}
+        <div className="flex items-start gap-8 mb-10">
+          <div className="min-w-0 max-w-[680px]">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-3 tracking-tighter leading-tight">
               {about.name}
             </h1>
-            <p className="text-xl md:text-2xl text-primary font-mono mt-1">
+            <p className="text-xl md:text-2xl text-primary font-mono mb-6">
               {about.current_role}
             </p>
+            <p className="text-lg md:text-xl text-textMuted font-light leading-relaxed border-l-2 border-primary/50 pl-6">
+              {about.subtitle}
+            </p>
+          </div>
+          <div className="shrink-0 pt-1">
+            <ProfileFlip
+              photo={getImageUrl(about.profile_picture)}
+              avatar={getImageUrl(about.avatar)}
+            />
           </div>
         </div>
 
-        <p className="text-lg md:text-xl text-textMuted font-light mb-10 leading-relaxed max-w-2xl border-l-2 border-primary/50 pl-6">
-          {about.subtitle}
-        </p>
-
         {about.summary && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div className="border border-white/10 bg-white/5 p-5 rounded-lg backdrop-blur-sm hover:border-primary/50 transition-colors group">
-              <Terminal className="w-7 h-7 text-primary mb-3 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-bold text-white mb-2">Full-Stack Development</h3>
-              <p className="text-textMuted text-sm">
-                Building scalable web applications with modern frameworks and robust backend architectures.
-              </p>
-            </div>
             <div className="border border-white/10 bg-white/5 p-5 rounded-lg backdrop-blur-sm hover:border-accent/50 transition-colors group">
               <Cpu className="w-7 h-7 text-accent mb-3 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-bold text-white mb-2">AI & Systems</h3>
+              <h3 className="text-lg font-bold text-white mb-2">Production AI Engineering</h3>
               <p className="text-textMuted text-sm">
-                Integrating AI/ML solutions and building intelligent systems for production environments.
+                I close the gap between LLM capability and enterprise reliability — fault-tolerant, observable, and multi-provider from day one.
+              </p>
+            </div>
+            <div className="border border-white/10 bg-white/5 p-5 rounded-lg backdrop-blur-sm hover:border-primary/50 transition-colors group">
+              <Terminal className="w-7 h-7 text-primary mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-bold text-white mb-2">Systems That Earn Trust</h3>
+              <p className="text-textMuted text-sm">
+                Async pipelines that don't silently fail, encrypted data flows, backends founders and operators can actually sleep on.
               </p>
             </div>
           </div>
@@ -172,14 +166,14 @@ export const Hero = ({ about, projectCount, experiences, onNavigateToProjects })
 
 const HeroSkeleton = () => (
   <div className="max-w-4xl animate-pulse">
-    <div className="flex items-center gap-5 mb-5">
-      <div className="w-24 h-24 bg-white/10 rounded-2xl shrink-0" />
+    <div className="flex items-start gap-8 mb-10">
       <div className="flex-1">
         <div className="h-12 bg-white/10 rounded w-3/4 mb-3" />
-        <div className="h-6 bg-primary/20 rounded w-1/2" />
+        <div className="h-6 bg-primary/20 rounded w-1/2 mb-6" />
+        <div className="h-24 bg-white/5 rounded border-l-2 border-primary/50 pl-6" />
       </div>
+      <div className="w-32 h-32 bg-white/10 rounded-full shrink-0" />
     </div>
-    <div className="h-24 bg-white/5 rounded w-full border-l-2 border-primary/50 pl-6 mb-12" />
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
       <div className="h-40 bg-white/5 rounded border border-white/10" />
       <div className="h-40 bg-white/5 rounded border border-white/10" />

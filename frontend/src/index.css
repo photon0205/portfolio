@@ -288,11 +288,16 @@ html {
     flex-shrink: 0;
   }
 
-  /* Grow to fill remaining space so right gap matches left px-12 gap */
+  /* Fixed width so text never reflows when adjacent slices expand on hover.
+     656px = usable_width(1440px viewport) − sidebar(320) − gap(32) − left_pad(48),
+     so both left and right gaps are ~48px at rest. Slice overflow-hidden clips
+     the ~24px right overhang when a sibling expands to flex-[2] on hover. */
   .project-content-stable {
-    flex: 1 0 400px;
-    min-width: 400px;
-    max-width: none;
+    flex: 0 0 656px;
+    width: 656px;
+    min-width: 656px;
+    max-width: 656px;
+    flex-shrink: 0;
     contain: layout;
   }
 }
