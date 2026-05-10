@@ -374,8 +374,9 @@ def _diff_about(payload, diff_result):
     if db_about:
         changes = _compare_about_fields(db_about, json_about)
         social_changes = _diff_social_links(db_about, json_about)
-        
-        if changes or social_changes:
+        has_social_changes = bool(social_changes.get('new') or social_changes.get('updated') or social_changes.get('stale'))
+
+        if changes or has_social_changes:
             entity = {
                 "status": "updated",
                 "db_id": db_about.id,
@@ -508,8 +509,9 @@ def _diff_projects(payload, diff_result):
             matched_db_ids.add(match.id)
             changes = _compare_project_fields(match, json_project)
             skills_changes = _diff_project_skills(match, json_project)
-            
-            if changes or skills_changes:
+            has_skills_changes = bool(skills_changes.get('added') or skills_changes.get('removed'))
+
+            if changes or has_skills_changes:
                 entities.append({
                     "status": "updated",
                     "matched_by": "id" if match.id == json_project.get('id') else "title",
@@ -657,8 +659,10 @@ def _diff_experiences(payload, diff_result):
             changes = _compare_experience_fields(match, json_exp)
             desc_changes = _diff_description_points(match, json_exp)
             skills_changes = _diff_experience_skills(match, json_exp)
-            
-            if changes or desc_changes or skills_changes:
+            has_desc_changes = bool(desc_changes.get('new') or desc_changes.get('updated') or desc_changes.get('stale'))
+            has_skills_changes = bool(skills_changes.get('added') or skills_changes.get('removed'))
+
+            if changes or has_desc_changes or has_skills_changes:
                 entities.append({
                     "status": "updated",
                     "matched_by": "id" if match.id == json_exp.get('id') else "company+title",
@@ -832,8 +836,9 @@ def _diff_opensource(payload, diff_result):
             matched_db_ids.add(match.id)
             changes = _compare_opensource_fields(match, json_os)
             contrib_changes = _diff_contributions(match, json_os)
-            
-            if changes or contrib_changes:
+            has_contrib_changes = bool(contrib_changes.get('new') or contrib_changes.get('updated') or contrib_changes.get('stale'))
+
+            if changes or has_contrib_changes:
                 entities.append({
                     "status": "updated",
                     "matched_by": "id" if match.id == json_os.get('id') else "repo_link",
