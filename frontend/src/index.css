@@ -288,13 +288,11 @@ html {
     flex-shrink: 0;
   }
 
-  /* Match About bio: fixed column width + no flex shrink so text does not reflow when layout flexes */
+  /* Grow to fill remaining space so right gap matches left px-12 gap */
   .project-content-stable {
-    flex: 0 0 600px;
-    width: 600px;
-    min-width: 600px;
-    max-width: 600px;
-    flex-shrink: 0;
+    flex: 1 0 400px;
+    min-width: 400px;
+    max-width: none;
     contain: layout;
   }
 }

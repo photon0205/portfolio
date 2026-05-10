@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Layers, Calendar, Building2, ChevronDown } from 'lucide-react';
+import { ExternalLink, Github, Layers, Calendar, Building2, ChevronDown, ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 
 // Helper to handle image URLs from API
 const getImageUrl = (path) => {
@@ -10,6 +10,12 @@ const getImageUrl = (path) => {
     return path; // Let the browser handle it (will be proxied in dev, served in prod)
   }
   return path;
+};
+
+// Helper to get thumbnail: prefer "Overview" category, fallback to first image
+const getThumbnail = (project) => {
+  if (!project.images || project.images.length === 0) return null;
+  return project.images.find(img => img.category === 'Overview') || project.images[0];
 };
 
 // Helper to get project highlights with fallback to bold phrases
@@ -106,6 +112,8 @@ export const Projects = ({ projects = [], isActive = false }) => {
 
   const [activeProject, setActiveProject] = useState(null);
   const [showFullDesc, setShowFullDesc] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     if (sortedProjects.length > 0 && !activeProject) {
@@ -113,16 +121,29 @@ export const Projects = ({ projects = [], isActive = false }) => {
     }
   }, [sortedProjects, activeProject]);
 
-  // Reset description collapse when switching projects
+  // Reset description collapse and carousel index when switching projects
   useEffect(() => {
     setShowFullDesc(false);
+    setCurrentImageIndex(0);
   }, [activeProject?.id]);
+
+  // Close lightbox on Escape
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === 'Escape') setLightboxImage(null);
+  }, []);
+  useEffect(() => {
+    if (lightboxImage) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [lightboxImage, handleKeyDown]);
 
   if (!projects || projects.length === 0) {
     return <ProjectsSkeleton />;
   }
 
   return (
+    <>
     <div className="projects-container projects-layout-stable gap-4 xl:gap-8 px-4 md:px-6 xl:px-12 min-w-0">
       {/* Mobile: Horizontal Tabs */}
       <div className="xl:hidden pt-4">
@@ -161,6 +182,19 @@ export const Projects = ({ projects = [], isActive = false }) => {
               <div className={`absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent transition-transform duration-500 ${isSelected ? 'translate-x-0' : '-translate-x-full'}`} />
 
               <div className="relative z-10">
+                {/* Thumbnail preview */}
+                {getThumbnail(p) && (
+                  <div className="-mx-6 -mt-6 mb-3 overflow-hidden h-[72px] relative rounded-t-sm">
+                    <img
+                      src={getImageUrl(getThumbnail(p).image)}
+                      alt={p.title}
+                      className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-300"
+                      onError={(e) => { e.target.closest('div').style.display = 'none'; }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/90" />
+                  </div>
+                )}
+
                 {/* Category label:
                     • section inactive → purple (text-primary)
                     • section active, this card selected → purple (contrasting with white title)
@@ -215,16 +249,67 @@ export const Projects = ({ projects = [], isActive = false }) => {
               className="bg-surfaceHighlight/50 border border-white/10 rounded-xl overflow-visible p-1 flex flex-col w-full max-w-full"
               style={{ minWidth: '0' }}
             >
-              {/* Image Area */}
+              {/* Image Carousel */}
               {activeProject.images && activeProject.images.length > 0 && (
-                <div className="relative h-40 xl:h-64 w-full overflow-hidden rounded-t-lg shrink-0">
+                <div
+                  className="relative w-full overflow-hidden rounded-t-lg shrink-0 group/carousel"
+                  style={{ aspectRatio: '16/10' }}
+                >
+                  {/* Current image */}
                   <img
-                    src={getImageUrl(activeProject.images[0]?.image)}
-                    alt={activeProject.title}
-                    className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-all duration-700"
+                    key={currentImageIndex}
+                    src={getImageUrl(activeProject.images[currentImageIndex]?.image)}
+                    alt={`${activeProject.title} ${currentImageIndex + 1}`}
+                    className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-all duration-500 cursor-zoom-in"
+                    onClick={() => setLightboxImage(getImageUrl(activeProject.images[currentImageIndex]?.image))}
                     onError={(e) => { e.target.style.display = 'none'; }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none" />
+
+                  {/* Zoom hint */}
+                  <div className="absolute top-3 left-3 flex items-center gap-1 text-[11px] text-white/60 bg-black/40 px-2 py-0.5 rounded-full opacity-0 group-hover/carousel:opacity-100 transition-opacity pointer-events-none">
+                    <ZoomIn className="w-3 h-3" /> click to zoom
+                  </div>
+
+                  {activeProject.images.length > 1 && (
+                    <>
+                      {/* Prev button */}
+                      <button
+                        onClick={() => setCurrentImageIndex(i => (i - 1 + activeProject.images.length) % activeProject.images.length)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors z-10 opacity-0 group-hover/carousel:opacity-100"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+
+                      {/* Next button */}
+                      <button
+                        onClick={() => setCurrentImageIndex(i => (i + 1) % activeProject.images.length)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors z-10 opacity-0 group-hover/carousel:opacity-100"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+
+                      {/* Counter badge */}
+                      <div className="absolute top-3 right-3 text-[11px] text-white/70 bg-black/50 px-2 py-0.5 rounded-full font-mono">
+                        {currentImageIndex + 1} / {activeProject.images.length}
+                      </div>
+
+                      {/* Dot indicators */}
+                      <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
+                        {activeProject.images.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setCurrentImageIndex(i)}
+                            className={`rounded-full transition-all duration-200 ${
+                              i === currentImageIndex
+                                ? 'w-4 h-1.5 bg-white'
+                                : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/70'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 
@@ -368,6 +453,38 @@ export const Projects = ({ projects = [], isActive = false }) => {
         </AnimatePresence>
       </div>
     </div>
+
+    {/* Lightbox overlay */}
+    <AnimatePresence>
+      {lightboxImage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4 md:p-8 cursor-zoom-out"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button
+            className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
+            onClick={() => setLightboxImage(null)}
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <motion.img
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            src={lightboxImage}
+            alt="Project screenshot"
+            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 };
 
