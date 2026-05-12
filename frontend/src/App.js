@@ -77,7 +77,7 @@ function App() {
       id: 'career', 
       title: 'EXPERIENCE', 
       subtitle: 'CAREER', 
-      component: <TechStack experiences={portfolioData?.experiences} opensource={portfolioData?.opensource} />, 
+      component: <TechStack experiences={portfolioData?.experiences} opensource={portfolioData?.opensource} isActive={activeSection === 'career'} />,
       bg: <TechBackground /> 
     },
     { 

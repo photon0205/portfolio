@@ -303,3 +303,34 @@ html {
   }
 }
 
+/* Prevent layout shifts in experience/career container */
+.experience-layout-stable {
+  contain: layout;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.experience-entry-stable {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style;
+}
+
+@media (min-width: 1280px) {
+  /* Hard-lock width + centered so:
+     1. text never reflows when slice expands/contracts on neighbor hover
+     2. auto margins on both sides keep left gap == right gap at every state.
+     920px chosen to fit comfortably at 1366px viewports during neighbor hover
+     (content area shrinks to ~928px). At 1280px during hover it slightly
+     overflows on the right; the slice's overflow-x-hidden clips that. */
+  .experience-content-stable {
+    width: 920px;
+    min-width: 920px;
+    max-width: 920px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-shrink: 0;
+    contain: layout;
+  }
+}
+

@@ -26,7 +26,7 @@ const fmtDate = (dateStr) => {
   return fmtDateObj(parseLocal(dateStr));
 };
 
-export const TechStack = ({ experiences = [], opensource = [] }) => {
+export const TechStack = ({ experiences = [], opensource = [], isActive = false }) => {
   const groupedExperiences = useMemo(() => {
     if (!experiences || experiences.length === 0) return [];
 
@@ -51,26 +51,27 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
     return groups;
   }, [experiences]);
 
-  if ((!experiences || experiences.length === 0) && (!opensource || opensource.length === 0)) {
+  if (!experiences || experiences.length === 0) {
     return <TechStackSkeleton />;
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 min-w-0">
+    <div className="experience-layout-stable min-w-0">
       {/* Experience Timeline */}
-      <div className="w-full lg:w-[500px] xl:w-[600px] shrink-0">
+      <div className="experience-content-stable">
         <h3 className="text-base md:text-xl font-bold text-white mb-6 md:mb-8 flex items-center gap-2 border-b border-white/10 pb-3">
           <Briefcase className="text-primary w-4 h-4 md:w-5 md:h-5 shrink-0" /> PROFESSIONAL TRAJECTORY
         </h3>
 
-        <div className="space-y-8 md:space-y-12 relative border-l border-white/10 ml-3 pl-6 md:pl-8">
+        <div className="space-y-8 md:space-y-12 relative border-l border-white/10 ml-3 mr-3 pl-6 md:pl-8">
           {groupedExperiences.map((group, groupIndex) => (
             <motion.div
               key={group.company}
               initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              whileInView={isActive ? { opacity: 1, x: 0 } : {}}
+              animate={isActive ? undefined : { opacity: 1, x: 0 }}
               transition={{ delay: groupIndex * 0.1 }}
-              className="relative"
+              className="relative experience-entry-stable"
             >
               {/* Timeline Dot */}
               <div className="absolute -left-[31px] md:-left-[39px] top-1 w-4 h-4 md:w-5 md:h-5 rounded-full border-4 border-background bg-primary" />
@@ -107,7 +108,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
                           <li key={item.id} className="text-xs md:text-sm text-textMuted leading-relaxed flex items-start gap-2 md:gap-3" style={{ width: '100%' }}>
                             <span className="mt-2 w-1 h-1 bg-primary rounded-full block shrink-0" />
                             <div
-                              className="text-break text-justify"
+                              className="text-break text-justify text-stable"
                               style={{ lineHeight: '1.5' }}
                               dangerouslySetInnerHTML={{ __html: item.point?.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }}
                             />
@@ -159,16 +160,13 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
         </div>
       </div>
 
-      {/* Open Source Side Panel */}
+      {/* Open Source Side Panel — commented out (contributions too basic for current profile level)
       <div className="w-full lg:w-[320px] lg:min-w-[280px] lg:max-w-[360px] flex flex-col gap-8 shrink-0">
-        
-        {/* Open Source Block */}
         {opensource && opensource.length > 0 && (
           <div className="bg-surfaceHighlight/20 border border-white/10 rounded-xl p-6">
              <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
                 <GitPullRequest className="text-accent" /> OPEN SOURCE
              </h3>
-             
              <div className="space-y-6">
                {opensource.map(os => (
                  <div key={os.id} className="group">
@@ -181,11 +179,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
                     <p className="text-xs text-textMuted mb-3 leading-relaxed text-break">{os.caption}</p>
                     <div className="space-y-2">
                       {os.contributions?.map(c => (
-                          <a 
-                              key={c.id} 
-                              href={c.pr_link}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                          <a key={c.id} href={c.pr_link} target="_blank" rel="noopener noreferrer"
                               className="block p-2 bg-black/40 hover:bg-white/5 rounded border border-white/5 hover:border-white/20 transition-all text-xs"
                           >
                               <span className={`inline-block w-2 h-2 rounded-full mr-2 ${
@@ -202,6 +196,7 @@ export const TechStack = ({ experiences = [], opensource = [] }) => {
           </div>
         )}
       </div>
+      */}
     </div>
   );
 };
@@ -213,8 +208,8 @@ const ExternalLinkIcon = () => (
 );
 
 const TechStackSkeleton = () => (
-  <div className="flex flex-col lg:flex-row h-full gap-8 animate-pulse">
-    <div className="w-full lg:w-3/5 space-y-8">
+  <div className="h-full animate-pulse">
+    <div className="w-full space-y-8">
       <div className="h-8 bg-white/10 rounded w-1/3"></div>
       {[1, 2, 3].map(i => (
         <div key={i} className="border-l border-white/10 ml-3 pl-8">
@@ -223,9 +218,6 @@ const TechStackSkeleton = () => (
           <div className="h-20 bg-white/5 rounded w-full"></div>
         </div>
       ))}
-    </div>
-    <div className="w-full lg:w-2/5">
-      <div className="h-64 bg-white/5 rounded-xl border border-white/10"></div>
     </div>
   </div>
 );
