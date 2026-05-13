@@ -48,5 +48,8 @@ class ProjectImage(models.Model):
     image = models.ImageField(upload_to="project_images/")
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
+    class Meta:
+        ordering = ["id"]
+
     def __str__(self):
         return f"{self.project.title} Image ({self.category})"
