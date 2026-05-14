@@ -25,15 +25,15 @@ export const About = ({ about, projectCount = 0, experienceCount = 0 }) => {
     try {
       // EmailJS configuration - you'll need to set these up
       await emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
           to_email: about?.email,
         },
-        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
       );
       setSent(true);
       setFormData({ name: '', email: '', message: '' });
